@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:title="Home"
+        android:id="@+id/btn_bar_home"
+        android:icon="@drawable/ic_house"/>
+    <item android:title="Equipos"
+        android:id="@+id/btn_bar_equipo"
+        android:icon="@drawable/ic_baseline_computer_24"/>
+    <item android:title="Prestamos"
+        android:id="@+id/btn_bar_prestamos"
+        android:icon="@drawable/ic_baseline_prestamo_24"/>
+    <item android:title="Ranking"
+        android:id="@+id/btn_bar_ranking"
+        android:icon="@drawable/ic_baseline_ranking_24"/>
+    <item android:title="Perfil"
+        android:id="@+id/btn_bar_perfil"
+        android:icon="@drawable/ic_person"/>
+</menu>

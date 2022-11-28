@@ -7,20 +7,21 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_main"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LenDTI"
         tools:targetApi="31">
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
         <activity
             android:name=".UserIT.PerfilActivity"
             android:exported="false" />
         <activity
             android:name=".UserIT.SolicitudEspecificaActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".UserIT.SolicitudActivity"
             android:exported="false" />
@@ -29,22 +30,19 @@
             android:exported="false" />
         <activity
             android:name=".UserIT.AgregarEquipoActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LogueoActivity"
-            android:exported="true" >
-
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="false" />

@@ -26,7 +26,7 @@ public class LogueoActivity extends AppCompatActivity {
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LogueoActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(LogueoActivity.this,AdminActivity.class);
                 startActivity(intent);
             }
         });
