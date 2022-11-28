@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/page_inicio"
+        android:title="Inicio"
+        android:icon="@drawable/ic_house"/>
+
+    <item
+        android:id="@+id/page_gestion"
+        android:title="Gestion"
+        android:icon="@drawable/ic_assignment" />
+
+    <item
+        android:id="@+id/page_solicitudes"
+        android:title="Solicitudes"
+        android:icon="@drawable/ic_baseline_email_24"
+        android:iconTint="@color/seed"/>
+
+    <item
+        android:id="@+id/page_perfil"
+        android:title="Perfil"
+        android:icon="@drawable/ic_person"/>
+
+
+</menu>

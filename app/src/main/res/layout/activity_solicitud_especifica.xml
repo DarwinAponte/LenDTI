@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/md_theme_light_onBackground"
+    android:layout_height="match_parent"
+    tools:context=".UserIT.SolicitudEspecificaActivity">
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+
+        android:id="@+id/bottomNavigation"
+        android:background="@color/md_theme_light_secondaryContainer"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:menu="@menu/userit_menu"
+        app:labelVisibilityMode="labeled"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageViewLogo"
+                    android:layout_width="110dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="80dp"
+                    app:srcCompat="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/textViewNombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:text="LenDTI"
+                    android:textColor="#FFFFFF"
+                    android:textSize="38sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                    app:layout_constraintStart_toEndOf="@+id/imageView7"
+                    app:layout_constraintTop_toTopOf="@+id/imageView7"
+                    app:layout_constraintVertical_bias="0.525" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textViewUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+                android:text="USUARIO:"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="38dp"
+                tools:layout_editor_absoluteY="145dp" />
+
+
+            <TextView
+                android:id="@+id/textViewCliente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+                android:text="CLIENTE"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="38dp"
+                tools:layout_editor_absoluteY="145dp" />
+
+            <TextView
+                android:id="@+id/tvCliente"
+                android:layout_width="222dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="Leo Mora"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="MOTIVO"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvMotivo"
+                android:layout_width="300dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="Para..."
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="CURSO"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView11"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+            <TextView
+                android:id="@+id/tvCurso"
+                android:layout_width="300dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="Propagacion y Radiacion"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="PROGRAMAS NECESARIOS"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvProgramas"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="Excel"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="TIEMPO DE PRÉSTAMO"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvTiempoPrestamo"
+                android:layout_width="146dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="5 dias"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewFoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="FOTO DNI"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageViewDNI"
+                android:layout_width="300dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/textViewOtros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="OTROS"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvOtros"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="Detalles adicionales"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewEquipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+                android:text="EQUIPO:"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="38dp"
+                tools:layout_editor_absoluteY="145dp" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="TIPO"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="38dp"
+                tools:layout_editor_absoluteY="145dp" />
+
+            <TextView
+                android:id="@+id/tvTipo"
+                android:layout_width="222dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="Laptop"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="MARCA"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvMarca"
+                android:layout_width="222dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="Lenovo"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewCaracteristicas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="CARACTERISTICAS"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvCaracteristicas"
+                android:layout_width="300dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="Caracteristicas"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewIncluye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+                android:text="INCLUYE"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/editTextTextIncluye"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:text="Cargador"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonAceptar"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Agregar" />
+
+                <Button
+                    android:id="@+id/buttonRechazar"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Rechazar" />
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "988512814786",
+    "project_id": "lendti-3e9e3",
+    "storage_bucket": "lendti-3e9e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988512814786:android:65d63bd2a9dfed1b8e1d5b",
+        "android_client_info": {
+          "package_name": "com.example.lendti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988512814786-kbfjl6clf6e55ipk9h6ngi52j86djglu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf5wKvYIDH5ljCY6eHt6BS8gBuToRAeEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988512814786-kbfjl6clf6e55ipk9h6ngi52j86djglu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

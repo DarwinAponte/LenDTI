@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_light_onBackground"
+    tools:context=".UserIT.ListaEquipoActivity">
+
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="110dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textViewNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LenDTI"
+        android:textColor="#FFFFFF"
+        android:textSize="38sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewLogo"
+        app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
+        app:layout_constraintTop_toTopOf="@+id/imageViewLogo" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+
+        android:id="@+id/bottomNavigation"
+        android:background="#93000A"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/userit_menu"
+        app:labelVisibilityMode="labeled"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="148dp"
+        android:text="Ultimos Agregados"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButtonLista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:srcCompat="@drawable/ic_baseline_format_list_bulleted_24" />
+
+    <ImageButton
+        android:id="@+id/imageButtonListaCuadrado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_lista_cuadro" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="2dp"
+        android:layout_height="40dp"
+        android:background="#FFDDB0"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonListaCuadrado"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonListaCuadrado"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonListaCuadrado" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="409dp"
+        android:layout_height="434dp"
+        android:layout_marginTop="216dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

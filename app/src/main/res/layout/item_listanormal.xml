@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="52dp"
+        android:background="#FFDDB0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="120dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textViewTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="140dp"
+        android:text="Tipo: Laptop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Marca: Lenovo"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTipo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewTipo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTipo" />
+
+    <TextView
+        android:id="@+id/textViewStock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Stock: 3 unidades"
+        app:layout_constraintEnd_toEndOf="@+id/textViewMarca"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewMarca"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMarca" />
+
+    <View
+        android:id="@+id/viewline"
+        android:layout_width="300dp"
+        android:layout_height="2dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageButton
+        android:id="@+id/imageButtonEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewline"
+        app:srcCompat="@drawable/ic_edit" />
+
+    <ImageButton
+        android:id="@+id/imageButtonBorrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonVerMas"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonVerMas"
+        app:srcCompat="@drawable/ic_trash" />
+
+    <ImageButton
+        android:id="@+id/imageButtonVerMas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonEdit"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonEdit"
+        app:srcCompat="@drawable/ic_ver_mas" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
