@@ -122,4 +122,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:srcCompat="@drawable/logo" />
 
+    <Button
+        android:id="@+id/buttonCliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cliente"
+        android:text="ver cliente" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

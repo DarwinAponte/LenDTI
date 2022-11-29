@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.lendti.Client.ListaClienteActivity;
 import com.example.lendti.UserIT.ListaEquipoActivity;
+import com.google.android.gms.common.api.Api;
 
 public class LogueoActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class LogueoActivity extends AppCompatActivity {
 
         Button ingresar = findViewById(R.id.buttonAcceder);
         TextView registrar = findViewById(R.id.clickRegister);
+        Button cliente =findViewById(R.id.buttonCliente);
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,10 +42,19 @@ public class LogueoActivity extends AppCompatActivity {
             }
         });
 
+        cliente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LogueoActivity.this, ListaClienteActivity.class));
+                finish();
+            }
+        });
+
 
 
 
     }
+
 
 
 
