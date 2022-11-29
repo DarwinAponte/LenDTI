@@ -15,6 +15,7 @@
             android:id="@+id/textView44"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Cantidad de equipos prestados"
             android:textAlignment="center"
             android:textColor="@color/md_theme_dark_inverseSurface"
@@ -23,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.519"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="664dp" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -39,7 +40,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView43">
 
             <TextView
-                android:id="@+id/textView40"
+                android:id="@+id/txtEquipos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -48,10 +49,10 @@
                 android:textColor="@color/md_theme_dark_background"
                 android:textSize="24dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView39" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewcantTotal" />
 
             <TextView
-                android:id="@+id/textView39"
+                android:id="@+id/textViewcantTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -86,7 +87,7 @@
             android:layout_marginEnd="24dp"
             android:background="@drawable/background_mostaza"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayoutequipos"
             app:layout_constraintTop_toBottomOf="@+id/textView38">
 
             <TextView
@@ -173,7 +174,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/constraintLayoutequipos"
             android:layout_width="180dp"
             android:layout_height="70dp"
             android:layout_marginStart="24dp"
