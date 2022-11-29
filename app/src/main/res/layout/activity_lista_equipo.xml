@@ -84,10 +84,28 @@
         app:layout_constraintTop_toTopOf="@+id/imageButtonListaCuadrado" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="409dp"
-        android:layout_height="434dp"
+        android:id="@+id/recycleViewSingle"
+        android:layout_width="361dp"
+        android:layout_height="339dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="216dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/floatingAgregarEquipo"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="328dp"
+        android:layout_marginTop="560dp"
+        android:clickable="true"
+        app:fab_addButtonColorNormal="#FFDDB0"
+        app:fab_addButtonPlusIconColor="@color/seed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic__add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
