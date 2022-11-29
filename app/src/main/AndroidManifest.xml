@@ -14,13 +14,14 @@
         android:theme="@style/Theme.LenDTI"
         tools:targetApi="31">
         <activity
+            android:name=".Admin.AdminNewUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".Client.HistorialPrestamosActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".Client.ListaSolicitudesActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".Client.ReservaDispositivosActivity"
             android:exported="false" />
@@ -34,7 +35,7 @@
             android:name=".Client.ListaDispositivosActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminActivity"
+            android:name=".Admin.AdminActivity"
             android:exported="false" />
         <activity
             android:name=".UserIT.PerfilActivity"

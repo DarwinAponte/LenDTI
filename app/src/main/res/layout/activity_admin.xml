@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminActivity">
+    tools:context=".Admin.AdminActivity">
 
     <FrameLayout
         android:id="@+id/frameLayoutAdmin"
@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/admin_menu"
-        android:background="#E39F9C"
+        app:itemIconTint="@color/md_theme_dark_onBackground"
+        android:background="@color/seed"
         app:labelVisibilityMode="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
