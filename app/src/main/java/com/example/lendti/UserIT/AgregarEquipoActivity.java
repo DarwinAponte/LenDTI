@@ -1,9 +1,11 @@
 package com.example.lendti.UserIT;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +27,8 @@ import butterknife.OnClick;
 public class AgregarEquipoActivity extends AppCompatActivity {
 
     Button btnagregar;
+    Button buttonEditar;
+    Button buttonEliminar;
     EditText tipo;
     EditText marca;
     EditText caracteristicas;
@@ -38,6 +42,7 @@ public class AgregarEquipoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agregar_equipo);
 
         String id =  getIntent().getStringExtra("idEquipo");
+        String ver = getIntent().getStringExtra("ver");
         firebaseFirestore = FirebaseFirestore.getInstance();
 
 
@@ -66,23 +71,63 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                 }
             });
         }else{
-            btnagregar.setText("Actualizar");
-            obtenerEquipo(id);
-            btnagregar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String tipoEquipo = tipo.getText().toString().trim();
-                    String marcaEquipo = marca.getText().toString().trim();
-                    String crtEquipo = caracteristicas.getText().toString().trim();
-                    String incluyeEquipo = incluye.getText().toString().trim();
-                    String stockEquipo = stock.getText().toString().trim();
-                    if(tipoEquipo.isEmpty() || marcaEquipo.isEmpty() || crtEquipo.isEmpty() || incluyeEquipo.isEmpty() | stockEquipo.isEmpty()){
-                        Toast.makeText(AgregarEquipoActivity.this,"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
-                    }else{
-                        actualizarEquipo(tipoEquipo,marcaEquipo,crtEquipo,incluyeEquipo,stockEquipo,id);
+            if(ver.equals("ver")){
+                btnagregar.setVisibility(View.GONE);
+                buttonEditar.setVisibility(View.VISIBLE);
+                buttonEliminar.setVisibility(View.VISIBLE);
+                obtenerEquipo(id);
+                buttonEditar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        buttonEditar.setVisibility(View.GONE);
+                        buttonEliminar.setVisibility(View.GONE);
+                        btnagregar.setVisibility(View.VISIBLE);
+                        btnagregar.setText("Actualizar");
+                        btnagregar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String tipoEquipo = tipo.getText().toString().trim();
+                                String marcaEquipo = marca.getText().toString().trim();
+                                String crtEquipo = caracteristicas.getText().toString().trim();
+                                String incluyeEquipo = incluye.getText().toString().trim();
+                                String stockEquipo = stock.getText().toString().trim();
+                                if(tipoEquipo.isEmpty() || marcaEquipo.isEmpty() || crtEquipo.isEmpty() || incluyeEquipo.isEmpty() | stockEquipo.isEmpty()){
+                                    Toast.makeText(AgregarEquipoActivity.this,"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
+                                }else{
+                                    actualizarEquipo(tipoEquipo,marcaEquipo,crtEquipo,incluyeEquipo,stockEquipo,id);
+                                }
+                            }
+                        });
+
                     }
-                }
-            });
+                });
+
+                buttonEliminar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mostrarAlertEquipEliminar();
+                    }
+                });
+            }else{
+                btnagregar.setText("Actualizar");
+                obtenerEquipo(id);
+                btnagregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String tipoEquipo = tipo.getText().toString().trim();
+                        String marcaEquipo = marca.getText().toString().trim();
+                        String crtEquipo = caracteristicas.getText().toString().trim();
+                        String incluyeEquipo = incluye.getText().toString().trim();
+                        String stockEquipo = stock.getText().toString().trim();
+                        if(tipoEquipo.isEmpty() || marcaEquipo.isEmpty() || crtEquipo.isEmpty() || incluyeEquipo.isEmpty() | stockEquipo.isEmpty()){
+                            Toast.makeText(AgregarEquipoActivity.this,"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
+                        }else{
+                            actualizarEquipo(tipoEquipo,marcaEquipo,crtEquipo,incluyeEquipo,stockEquipo,id);
+                        }
+                    }
+                });
+            }
+
 
         }
 
@@ -164,5 +209,25 @@ public class AgregarEquipoActivity extends AppCompatActivity {
     public void showBottomSheetGrid(View view) {
         BottomSheetMenuFragment frg = BottomSheetMenuFragment.createInstanceGrid();
         frg.show(getSupportFragmentManager(), BottomSheetMenuFragment.class.getSimpleName());
+    }
+
+    public void mostrarAlertEquipEliminar(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("¿Desea eliminar el equipo de la lista?");
+        alertDialog.setPositiveButton("Aceptar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        alertDialog.setNegativeButton("Cancelar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        alertDialog.show();
     }
 }

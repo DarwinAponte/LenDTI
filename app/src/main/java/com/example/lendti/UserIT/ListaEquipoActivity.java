@@ -1,5 +1,6 @@
 package com.example.lendti.UserIT;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,9 +20,12 @@ import com.example.lendti.Entity.Equipo;
 import com.example.lendti.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.AddFloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.internal.NavigationMenuView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -31,6 +35,7 @@ public class ListaEquipoActivity extends AppCompatActivity {
     EquipoAdapter equipoAdapter;
     FirebaseFirestore firebaseFirestore;
     FloatingActionButton floatadd;
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,34 +55,7 @@ public class ListaEquipoActivity extends AppCompatActivity {
         recyclerView.setAdapter(equipoAdapter);
 
         floatadd = findViewById(R.id.floatingAgregarEquipo);
-        floatadd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ListaEquipoActivity.this,AgregarEquipoActivity.class));
-                finish();
-            }
-        });
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.page_inicio:
-                    startActivity(new Intent(ListaEquipoActivity.this,ListaEquipoActivity.class));
-                    break;
-                case R.id.page_gestion:
-                    startActivity(new Intent(ListaEquipoActivity.this,AgregarEquipoActivity.class));
-                    break;
-                case R.id.page_solicitudes:
-                    startActivity(new Intent(ListaEquipoActivity.this,SolicitudActivity.class));
-                case R.id.page_perfil:
-                    startActivity(new Intent(ListaEquipoActivity.this,PerfilActivity.class));
-                default:
-                    break;
-            }
-            return true;
-        });
-
-
+        setBottomNavigationView();
     }
 
     @Override
@@ -90,6 +68,40 @@ public class ListaEquipoActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         equipoAdapter.stopListening();
+    }
+
+    public void agregarEquipo(View view){
+        startActivity(new Intent(ListaEquipoActivity.this,AgregarEquipoActivity.class));
+        finish();
+    }
+
+    public void setBottomNavigationView(){
+        bottomNavigationView = findViewById(R.id.bottomNavigationGestionUserIT);
+        bottomNavigationView.clearAnimation();
+        bottomNavigationView.setSelectedItemId(R.id.page_gestion);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.page_inicio:
+                        startActivity(new Intent(ListaEquipoActivity.this,MainActivityUserIT.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.page_gestion:
+                        return true;
+                    case R.id.page_solicitudes:
+                        startActivity(new Intent(ListaEquipoActivity.this,SolicitudActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.page_perfil:
+                        startActivity(new Intent(ListaEquipoActivity.this,PerfilActivity.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
 }

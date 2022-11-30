@@ -14,6 +14,9 @@
         android:theme="@style/Theme.LenDTI"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivityUserIT"
+            android:exported="false" />
+        <activity
             android:name=".Admin.AdminNewUserActivity"
             android:exported="false" />
         <activity
@@ -42,15 +45,19 @@
             android:exported="false" />
         <activity
             android:name=".UserIT.SolicitudEspecificaActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".UserIT.SolicitudActivity"
             android:exported="false" />
         <activity
             android:name=".UserIT.ListaEquipoActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".UserIT.AgregarEquipoActivity"
             android:exported="false" />
@@ -59,15 +66,7 @@
             android:exported="false" />
         <activity
             android:name=".LogueoActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-
+            android:exported="false"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="false" />

@@ -7,43 +7,47 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.lendti.MainActivity;
 import com.example.lendti.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class PerfilActivity extends AppCompatActivity {
+public class MainActivityUserIT extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil);
+        setContentView(R.layout.activity_main_user_it);
+
         setBottomNavigationView();
     }
 
 
+
+
     public void setBottomNavigationView(){
-        bottomNavigationView = findViewById(R.id.bottomNavigationPerfilUserIT);
+        bottomNavigationView = findViewById(R.id.bottomNavigationGestionUserIT);
         bottomNavigationView.clearAnimation();
-        bottomNavigationView.setSelectedItemId(R.id.page_perfil);
+        bottomNavigationView.setSelectedItemId(R.id.page_inicio);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.page_inicio:
-                        startActivity(new Intent(PerfilActivity.this,MainActivityUserIT.class));
-                        overridePendingTransition(0,0);
                         return true;
                     case R.id.page_gestion:
-                        startActivity(new Intent(PerfilActivity.this,ListaEquipoActivity.class));
+                        startActivity(new Intent(MainActivityUserIT.this,ListaEquipoActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_solicitudes:
-                        startActivity(new Intent(PerfilActivity.this,SolicitudActivity.class));
+                        startActivity(new Intent(MainActivityUserIT.this,SolicitudActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_perfil:
-
+                        startActivity(new Intent(MainActivityUserIT.this,PerfilActivity.class));
+                        overridePendingTransition(0,0);
+                        finish();
                         return true;
                 }
                 return false;

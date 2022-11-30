@@ -50,15 +50,25 @@ public class EquipoAdapter extends FirestoreRecyclerAdapter<Equipo,EquipoAdapter
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
         final String id = documentSnapshot.getId();
 
-        holder.tipo.setText(equipo.getTipo());
-        holder.marca.setText(equipo.getMarca());
-        holder.stock.setText(equipo.getStock());
+        holder.tipo.setText("Tipo: " + equipo.getTipo());
+        holder.marca.setText("Marca: " + equipo.getMarca());
+        holder.stock.setText("Stock: "+ equipo.getStock()+" unidades");
 
         holder.btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(activity, AgregarEquipoActivity.class);
                 i.putExtra("idEquipo",id);
+                activity.startActivity(i);
+            }
+        });
+
+        holder.btnVer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(activity,AgregarEquipoActivity.class);
+                i.putExtra("idEquipo",id);
+                i.putExtra("ver","ver");
                 activity.startActivity(i);
             }
         });
@@ -79,12 +89,13 @@ public class EquipoAdapter extends FirestoreRecyclerAdapter<Equipo,EquipoAdapter
         TextView stock;
         ImageButton btnEliminar;
         ImageButton btnEditar;
-
+        ImageButton btnVer;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             btnEditar = itemView.findViewById(R.id.imageButtonEdit);
             btnEliminar = itemView.findViewById(R.id.imageButtonBorrar);
+            btnVer = itemView.findViewById(R.id.imageButtonVerMas);
             tipo = itemView.findViewById(R.id.textViewTipo);
             marca = itemView.findViewById(R.id.textViewMarca);
             stock = itemView.findViewById(R.id.textViewStock);

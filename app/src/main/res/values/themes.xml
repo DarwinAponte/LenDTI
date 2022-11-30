@@ -56,4 +56,27 @@
     </style>
 
 
+    <style name="lendti.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">#00FFFFFF</item>
+    </style>
+    <style name="BottonMenu">
+        <item name="android:background">#93000A</item>
+        <item name="itemPaddingTop">8dp</item>
+        <item name="itemPaddingBottom">12dp</item>
+        <item name="itemIconSize">22dp</item>
+        <item name="itemIconTint">@color/md_theme_light_onSurface</item>
+        <item name="itemTextColor">@color/md_theme_light_onSurface</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemActiveIndicatorStyle">@style/lendti.Custom.Indicator</item>
+
+    </style>
+
+    <style name="ImageView.circular" parent="">
+        <item name="cornerSizeTopRight">100dp</item>
+        <item name="cornerSizeTopLeft">100dp</item>
+        <item name="cornerSizeBottomLeft">100dp</item>
+        <item name="cornerSizeBottomRight">100dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
 </resources>

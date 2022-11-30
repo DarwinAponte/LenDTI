@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#FFDDB0">
+    app:cardBackgroundColor="#FFDDB0"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="16dp">
+
+
 
 
     <LinearLayout
@@ -19,9 +23,9 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="140dp"
-                android:layout_height="70dp"
-                android:layout_marginEnd="30dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="20dp"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -36,8 +40,7 @@
                     android:id="@+id/textViewTipo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="140dp"
+                    android:layout_marginTop="8dp"
                     android:text="Tipo: Laptop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -89,7 +92,7 @@
                 android:id="@+id/imageButtonEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="30dp"
                 android:backgroundTint="#00FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewline"
@@ -99,7 +102,7 @@
                 android:id="@+id/imageButtonVerMas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
+                android:layout_marginStart="40dp"
                 android:backgroundTint="#00FFFFFF"
                 app:layout_constraintStart_toEndOf="@+id/imageButtonEdit"
                 app:layout_constraintTop_toTopOf="@+id/imageButtonEdit"
@@ -109,7 +112,7 @@
                 android:id="@+id/imageButtonBorrar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="40dp"
                 android:backgroundTint="#00FFFFFF"
                 app:layout_constraintStart_toEndOf="@+id/imageButtonVerMas"
                 app:layout_constraintTop_toTopOf="@+id/imageButtonVerMas"
