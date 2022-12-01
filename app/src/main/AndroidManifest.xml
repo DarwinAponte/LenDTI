@@ -14,7 +14,7 @@
         android:theme="@style/Theme.LenDTI"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivityUserIT"
+            android:name=".UserIT.MainActivityUserIT"
             android:exported="false" />
         <activity
             android:name=".Admin.AdminNewUserActivity"
@@ -54,7 +54,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
