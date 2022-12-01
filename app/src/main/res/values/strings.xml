@@ -7,4 +7,16 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    //Titulos xde
+    <string name="heading_one">Prestamos Equipos de TI!</string>
+    <string name="heading_two">Solicita el Préstamo de un Equipo</string>
+    <string name="heading_three">Recoge tu Equipo solicitado!</string>
+
+    //Description
+    <string name="desc_one">Saca provecho al almacén de equipos TI de la PUCP, no te lo pierdas!</string>
+    <string name="desc_two">Ingresa con tu correo y solicita el equipo que más te agrade. Puedes llevarte hasta 2 equipos diferentes!</string>
+    <string name="desc_three">Te esperamos de lunes - viernes de 8am a 5pm en el Pabellón V(101)! NO olvides traer tu DNI.</string>
+
 </resources>
