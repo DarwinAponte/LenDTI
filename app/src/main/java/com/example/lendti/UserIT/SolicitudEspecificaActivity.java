@@ -73,27 +73,38 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
         firebaseFirestore.collection("solicitudes").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String nombreSoli = documentSnapshot.getString("nombre");
+                String uidCliente = documentSnapshot.getString("uidCliente");
                 String motivoSoli = documentSnapshot.getString("motivo");
                 String cursoSoli = documentSnapshot.getString("curso");
                 String programasSoli = documentSnapshot.getString("programas");
-                String prestamoSoli = documentSnapshot.getString("prestamo");
+                String timeSoli = documentSnapshot.getString("time");
                 String otrosSoli = documentSnapshot.getString("otros");
-                String tipoSoli = documentSnapshot.getString("tipo");
-                String marcaSoli = documentSnapshot.getString("marca");
-                String caracSoli = documentSnapshot.getString("caracteristicas");
-                String incluyeSoli = documentSnapshot.getString("incluye");
+                String uidEquipo = documentSnapshot.getString("uidEquipo");
 
-                nombre.setText(nombreSoli);
+                firebaseFirestore.collection("clientes").document(uidCliente).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        String nombreCompleto = documentSnapshot.getString("nombre")+" "+documentSnapshot.getString("apellido");
+                        nombre.setText(nombreCompleto);
+                    }
+                });
+
+                firebaseFirestore.collection("equipos").document(uidCliente).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        tipo.setText(documentSnapshot.getString("tipo"));
+                        marca.setText(documentSnapshot.getString("marca"));
+                        caracteristicas.setText(documentSnapshot.getString("caracteristicas"));
+                        incluye.setText(documentSnapshot.getString("tipo"));
+                    }
+                });
+
                 motivo.setText(motivoSoli);
                 curso.setText(cursoSoli);
                 programas.setText(programasSoli);
-                prestamo.setText(prestamoSoli);
+                prestamo.setText(timeSoli);
                 otros.setText(otrosSoli);
-                tipo.setText(tipoSoli);
-                marca.setText(marcaSoli);
-                caracteristicas.setText(caracSoli);
-                incluye.setText(incluyeSoli);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

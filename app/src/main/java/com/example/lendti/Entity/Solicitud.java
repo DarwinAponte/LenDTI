@@ -2,22 +2,77 @@ package com.example.lendti.Entity;
 
 public class Solicitud {
 
-    private Cliente cliente;
-    private Equipo Equipo;
+    private String uidCliente;
+    private String uidEquipo;
+    private String motivo;
+    private String curso;
+    private String time;
+    private String programas;
+    private String urlFotoDNI;
+    private String otros;
 
-    public Cliente getCliente() {
-        return cliente;
+
+    public String getUidCliente() {
+        return uidCliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setUidCliente(String uidCliente) {
+        this.uidCliente = uidCliente;
     }
 
-    public com.example.lendti.Entity.Equipo getEquipo() {
-        return Equipo;
+    public String getUidEquipo() {
+        return uidEquipo;
     }
 
-    public void setEquipo(com.example.lendti.Entity.Equipo equipo) {
-        Equipo = equipo;
+    public void setUidEquipo(String uidEquipo) {
+        this.uidEquipo = uidEquipo;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getProgramas() {
+        return programas;
+    }
+
+    public void setProgramas(String programas) {
+        this.programas = programas;
+    }
+
+    public String getUrlFotoDNI() {
+        return urlFotoDNI;
+    }
+
+    public void setUrlFotoDNI(String urlFotoDNI) {
+        this.urlFotoDNI = urlFotoDNI;
+    }
+
+    public String getOtros() {
+        return otros;
+    }
+
+    public void setOtros(String otros) {
+        this.otros = otros;
     }
 }

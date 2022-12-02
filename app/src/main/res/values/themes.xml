@@ -71,11 +71,20 @@
 
     </style>
 
-    <style name="ImageView.circular" parent="">
+    <style name="Bottom.circular" parent="">
         <item name="cornerSizeTopRight">100dp</item>
         <item name="cornerSizeTopLeft">100dp</item>
         <item name="cornerSizeBottomLeft">100dp</item>
         <item name="cornerSizeBottomRight">100dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+
+    <style name="ImageView.circular" parent="">
+        <item name="cornerSizeTopRight">10dp</item>
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeBottomLeft">10dp</item>
+        <item name="cornerSizeBottomRight">10dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
 

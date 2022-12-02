@@ -121,7 +121,7 @@
         android:clickable="true"
         android:focusable="true"
         app:borderWidth="0dp"
-        app:shapeAppearanceOverlay="@style/ImageView.circular"
+        app:shapeAppearanceOverlay="@style/Bottom.circular"
         app:fab_addButtonColorNormal="#FFDDB0"
         app:fab_addButtonPlusIconColor="@color/seed"
         app:layout_constraintEnd_toEndOf="parent"

@@ -15,6 +15,7 @@ import com.example.lendti.R;
 import com.example.lendti.UserIT.SolicitudEspecificaActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,6 +23,10 @@ public class SolicitudITAdapter extends FirestoreRecyclerAdapter<Solicitud, Soli
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     Activity activity;
+    String nombre;
+    String apellido;
+    String tipo;
+    String marca;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -39,9 +44,27 @@ public class SolicitudITAdapter extends FirestoreRecyclerAdapter<Solicitud, Soli
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
         final String id = documentSnapshot.getId();
 
-        holder.cliente.setText("Cliente: "+ solicitud.getCliente().getNombre() +" "+solicitud.getCliente().getApellido());
-        holder.tipo.setText("Tipo: " + solicitud.getEquipo().getTipo());
-        holder.marca.setText("Marca: " + solicitud.getEquipo().getMarca());
+        firebaseFirestore.collection("clientes").document(solicitud.getUidCliente())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                nombre = documentSnapshot.getString("nombre");
+                apellido = documentSnapshot.getString("apellido");
+            }
+        });
+
+        firebaseFirestore.collection("equipos").document(solicitud.getUidEquipo())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        tipo = documentSnapshot.getString("nombre");
+                        marca = documentSnapshot.getString("apellido");
+                    }
+                });
+
+        holder.cliente.setText("Cliente: "+ nombre +" "+apellido);
+        holder.tipo.setText("Tipo: " + tipo);
+        holder.marca.setText("Marca: " + marca);
 
         holder.ver.setOnClickListener(new View.OnClickListener() {
             @Override

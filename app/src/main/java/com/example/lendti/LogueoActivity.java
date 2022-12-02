@@ -103,13 +103,14 @@ public class LogueoActivity extends AppCompatActivity {
                     }
 
                     if(rolLogueo.equals("cliente")){
-                        Intent i = new Intent(LogueoActivity.this, ListaClienteActivity.class);
-                        i.putExtra("main","main");
-                        startActivity(i);
+                        startActivity(new Intent(LogueoActivity.this, ListaClienteActivity.class));
                         finish();
                         Toast.makeText(LogueoActivity.this,"Bienvenido Cliente",Toast.LENGTH_SHORT).show();
                     }else if (rolLogueo.equals("usuario")){
-                        startActivity(new Intent(LogueoActivity.this, ListaEquipoActivity.class));
+                        Intent i = new Intent(LogueoActivity.this, ListaEquipoActivity.class);
+                        i.putExtra("main","main");
+                        startActivity(i);
+                        finish();
                         Toast.makeText(LogueoActivity.this,"Bienvenido UsuarioTI",Toast.LENGTH_SHORT).show();
                     }else if(rolLogueo.equals("admin")){
                         startActivity(new Intent(LogueoActivity.this, AdminActivity.class));

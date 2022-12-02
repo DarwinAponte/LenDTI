@@ -138,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(exist){
             Toast.makeText(RegisterActivity.this,"Este correo ya tiene una cuenta asociada",Toast.LENGTH_SHORT).show();
         }else if(codigo.length()!=8){
-            Toast.makeText(RegisterActivity.this,"El DNI debe contener 8 carácteres",Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this,"El codigo debe contener 8 carácteres",Toast.LENGTH_SHORT).show();
         }else if(rol.equals("rol")){
             Toast.makeText(RegisterActivity.this,"Eliga su rol",Toast.LENGTH_SHORT).show();
         }else if(!password.equals(password1)){
