@@ -1,16 +1,26 @@
 package com.example.lendti;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
 import butterknife.ButterKnife;
@@ -22,6 +32,8 @@ public class BottomSheetMenuFragment extends BottomSheetDialogFragment {
     private static final int GRID = R.layout.fragment_grid_bottom_sheet;
     private Dialog dialog;
     private int style;
+    private StorageReference mStorage = FirebaseStorage.getInstance().getReference();
+    private static final int GALLERY_INTENT = 1;
 
     public static BottomSheetMenuFragment createInstanceGrid() {
         return getInstance(GRID);
@@ -46,10 +58,35 @@ public class BottomSheetMenuFragment extends BottomSheetDialogFragment {
         dialog.setContentView(contentView);
     }
 
-    @OnClick({R.id.imageButtonCamara, R.id.imageButtonGaleria})
-    public void onClickBottomSheet(View view) {
-        Toast.makeText(getContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-        dismiss();
+    @OnClick(R.id.imageButtonCamara)
+    public void onClickBottomCamara(View view) {
+
+
     }
 
+    @OnClick(R.id.imageButtonGaleria)
+    public void onClickBottomGaleria(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent,GALLERY_INTENT);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
+            Uri uri = data.getData();
+            StorageReference filePath = mStorage.child("fotos").child(uri.getLastPathSegment());
+            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri descargarfoto = taskSnapshot.getStorage().getDownloadUrl().getResult();
+
+                    Toast.makeText(getActivity(),"Se subio exitosamente",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+    }
 }

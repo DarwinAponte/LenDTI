@@ -22,7 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class EquipoITAdapter extends FirestoreRecyclerAdapter<Equipo, EquipoITAdapter.ViewHolder> {
+public class EquipoITGridAdpater extends FirestoreRecyclerAdapter<Equipo, EquipoITGridAdpater.ViewHolder> {
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     Activity activity;
@@ -33,26 +33,19 @@ public class EquipoITAdapter extends FirestoreRecyclerAdapter<Equipo, EquipoITAd
      *
      * @param options
      */
-    public EquipoITAdapter(@NonNull FirestoreRecyclerOptions<Equipo> options, Activity activity) {
+    public EquipoITGridAdpater(@NonNull FirestoreRecyclerOptions<Equipo> options,Activity activity) {
         super(options);
         this.activity = activity;
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_listanormal,parent,false);
-        return new ViewHolder(v);
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Equipo equipo) {
+    protected void onBindViewHolder(@NonNull EquipoITGridAdpater.ViewHolder holder, int position, @NonNull Equipo equipo) {
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
         final String id = documentSnapshot.getId();
 
-        holder.tipo.setText("Tipo: " + equipo.getTipo());
-        holder.marca.setText("Marca: " + equipo.getMarca());
-        holder.stock.setText("Stock: "+ equipo.getStock()+" unidades");
+        holder.tipo.setText(equipo.getTipo());
+        holder.marca.setText(equipo.getMarca());
+        holder.stock.setText(equipo.getStock()+" unidades");
 
         holder.btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +74,13 @@ public class EquipoITAdapter extends FirestoreRecyclerAdapter<Equipo, EquipoITAd
         });
     }
 
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lista_equipo_grid,parent,false);
+        return new ViewHolder(v);
+    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {

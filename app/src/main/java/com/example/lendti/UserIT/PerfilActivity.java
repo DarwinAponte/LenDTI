@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lendti.BottomSheetMenuFragment;
@@ -32,7 +33,7 @@ public class PerfilActivity extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     TextView nombre,codigo,correo;
-
+    ImageView imagePerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class PerfilActivity extends AppCompatActivity {
         nombre = findViewById(R.id.tvPerfilNombre);
         codigo = findViewById(R.id.tvPerfilCodigo);
         correo = findViewById(R.id.tvPerfilCorreo);
+        imagePerfil = findViewById(R.id.imagViewPerfil);
+
         firebaseFirestore.collection("users").document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -68,6 +71,8 @@ public class PerfilActivity extends AppCompatActivity {
     public void showBottomSheetGrid(View view) {
         BottomSheetMenuFragment frg = BottomSheetMenuFragment.createInstanceGrid();
         frg.show(getSupportFragmentManager(), BottomSheetMenuFragment.class.getSimpleName());
+
+
     }
 
 

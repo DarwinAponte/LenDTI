@@ -2,6 +2,7 @@ package com.example.lendti.UserIT;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,8 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.example.lendti.Adapter.EquipoITAdapter;
+import com.example.lendti.Adapter.EquipoITGridAdpater;
 import com.example.lendti.Entity.Equipo;
 import com.example.lendti.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -36,7 +40,9 @@ public class ListaEquipoActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     List<String> listaUltimos = new ArrayList<>();
     FirestoreRecyclerOptions<Equipo> firestoreRecyclerOptions;
-
+    ImageButton btnLista,btnGrid;
+    EquipoITGridAdpater equipoITGridAdpater;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,14 +52,20 @@ public class ListaEquipoActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recycleViewSingle);
         floatadd = findViewById(R.id.floatingAgregarEquipo);
+        btnLista = findViewById(R.id.imageButtonLista);
+        btnGrid = findViewById(R.id.imageButtonListaCuadrado);
 
         String lista = getIntent().getStringExtra("lista");
         String main = getIntent().getStringExtra("main");
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        if(lista==null || lista.equals("")){
-            floatadd.setVisibility(View.GONE);
-            firebaseFirestore.collection("equipos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        btnLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(ListaEquipoActivity.this));
+                if(lista==null || lista.equals("")){
+                    floatadd.setVisibility(View.GONE);
+                    firebaseFirestore.collection("equipos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -66,24 +78,74 @@ public class ListaEquipoActivity extends AppCompatActivity {
                             }
                         }
                     });
-            if(listaUltimos.size()<=5){
-                Query query = firebaseFirestore.collection("equipos");
-                firestoreRecyclerOptions =
-                        new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
-            }else{
-                Query query = firebaseFirestore.collection("equipos").endBefore(listaUltimos.get((listaUltimos.size()-1))).limit(5);
-                firestoreRecyclerOptions =
-                        new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+                    if(listaUltimos.size()<=5){
+                        Query query = firebaseFirestore.collection("equipos");
+                        firestoreRecyclerOptions =
+                                new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+                    }else{
+                        Query query = firebaseFirestore.collection("equipos").endBefore(listaUltimos.get((listaUltimos.size()-1))).limit(5);
+                        firestoreRecyclerOptions =
+                                new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+
+                    }
+                }else{
+                    Query query = firebaseFirestore.collection("equipos");
+                    firestoreRecyclerOptions =
+                            new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+                }
+                equipoITAdapter = new EquipoITAdapter(firestoreRecyclerOptions,ListaEquipoActivity.this);
+                equipoITAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(equipoITAdapter);
+                
+            }
+        });
+
+        btnGrid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.setLayoutManager(new GridLayoutManager(ListaEquipoActivity.this,2));
+                if(lista==null || lista.equals("")){
+                    floatadd.setVisibility(View.GONE);
+                    firebaseFirestore.collection("equipos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    //Log.d(TAG, document.getId() + " => " + document.getData());
+                                    listaUltimos.add(document.getId());
+                                }
+                            } else {
+                                //Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+                    if(listaUltimos.size()<=5){
+                        Query query = firebaseFirestore.collection("equipos");
+                        firestoreRecyclerOptions =
+                                new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+                    }else{
+                        Query query = firebaseFirestore.collection("equipos").endBefore(listaUltimos.get((listaUltimos.size()-1))).limit(5);
+                        firestoreRecyclerOptions =
+                                new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+
+                    }
+                }else{
+                    Query query = firebaseFirestore.collection("equipos");
+                    firestoreRecyclerOptions =
+                            new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+                }
+                equipoITGridAdpater = new EquipoITGridAdpater(firestoreRecyclerOptions,ListaEquipoActivity.this);
+                equipoITGridAdpater.notifyDataSetChanged();
+                recyclerView.setAdapter(equipoITGridAdpater);
+
 
             }
-        }else{
-            Query query = firebaseFirestore.collection("equipos");
-            firestoreRecyclerOptions =
-                    new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
-        }
-        equipoITAdapter = new EquipoITAdapter(firestoreRecyclerOptions,this);
-        equipoITAdapter.notifyDataSetChanged();
-        recyclerView.setAdapter(equipoITAdapter);
+        });
+
+
+
+
+
 
 
         setBottomNavigationView();

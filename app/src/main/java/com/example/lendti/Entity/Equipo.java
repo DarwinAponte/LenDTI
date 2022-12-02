@@ -1,5 +1,7 @@
 package com.example.lendti.Entity;
 
+import java.util.List;
+
 public class Equipo {
 
     private String tipo;
@@ -7,6 +9,15 @@ public class Equipo {
     private String caracteristicas;
     private String incluye;
     private String stock;
+    private List<String> listaFotos;
+
+    public List<String> getListaFotos() {
+        return listaFotos;
+    }
+
+    public void setListaFotos(List<String> listaFotos) {
+        this.listaFotos = listaFotos;
+    }
 
     public String getTipo() {
         return tipo;

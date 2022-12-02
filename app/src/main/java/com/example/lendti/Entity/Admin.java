@@ -9,6 +9,8 @@ public class Admin {
     private String codigo;
     private String horario;
     private String urlfoto;
+    private String password;
+
 
 
 
@@ -19,6 +21,14 @@ public class Admin {
         this.correo = correo;
         this.codigo = codigo;
         this.horario = horario;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUrlfoto() {
