@@ -3,24 +3,29 @@ package com.example.lendti.UserIT;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.lendti.Adapter.EquipoITAdapter;
 import com.example.lendti.BottomSheetMenuFragment;
 import com.example.lendti.Entity.Equipo;
 import com.example.lendti.R;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import butterknife.OnClick;
 
@@ -35,6 +40,8 @@ public class AgregarEquipoActivity extends AppCompatActivity {
     EditText incluye;
     EditText stock;
     FirebaseFirestore firebaseFirestore;
+    EquipoITAdapter equipoITAdapter;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +52,10 @@ public class AgregarEquipoActivity extends AppCompatActivity {
         String ver = getIntent().getStringExtra("ver");
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        setBottomNavigationView();
 
-
+        buttonEditar = findViewById(R.id.buttonEditar);
+        buttonEliminar = findViewById(R.id.buttonEliminar);
         btnagregar = findViewById(R.id.buttonAgregar);
         tipo = findViewById(R.id.editTextTipo);
         marca = findViewById(R.id.editTextMarca);
@@ -71,44 +80,7 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                 }
             });
         }else{
-            if(ver.equals("ver")){
-                btnagregar.setVisibility(View.GONE);
-                buttonEditar.setVisibility(View.VISIBLE);
-                buttonEliminar.setVisibility(View.VISIBLE);
-                obtenerEquipo(id);
-                buttonEditar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        buttonEditar.setVisibility(View.GONE);
-                        buttonEliminar.setVisibility(View.GONE);
-                        btnagregar.setVisibility(View.VISIBLE);
-                        btnagregar.setText("Actualizar");
-                        btnagregar.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                String tipoEquipo = tipo.getText().toString().trim();
-                                String marcaEquipo = marca.getText().toString().trim();
-                                String crtEquipo = caracteristicas.getText().toString().trim();
-                                String incluyeEquipo = incluye.getText().toString().trim();
-                                String stockEquipo = stock.getText().toString().trim();
-                                if(tipoEquipo.isEmpty() || marcaEquipo.isEmpty() || crtEquipo.isEmpty() || incluyeEquipo.isEmpty() | stockEquipo.isEmpty()){
-                                    Toast.makeText(AgregarEquipoActivity.this,"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
-                                }else{
-                                    actualizarEquipo(tipoEquipo,marcaEquipo,crtEquipo,incluyeEquipo,stockEquipo,id);
-                                }
-                            }
-                        });
-
-                    }
-                });
-
-                buttonEliminar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mostrarAlertEquipEliminar();
-                    }
-                });
-            }else{
+            if(ver==null || ver==""){
                 btnagregar.setText("Actualizar");
                 obtenerEquipo(id);
                 btnagregar.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +99,64 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                     }
                 });
             }
+            else{
+                tipo.setFocusable(false);
+                tipo.setTextIsSelectable(false);
+                marca.setFocusable(false);
+                marca.setTextIsSelectable(false);
+                caracteristicas.setFocusable(false);
+                caracteristicas.setTextIsSelectable(false);
+                incluye.setFocusable(false);
+                incluye.setTextIsSelectable(false);
+                stock.setFocusable(false);
+                stock.setTextIsSelectable(false);
+                btnagregar.setVisibility(View.GONE);
+                buttonEditar.setVisibility(View.VISIBLE);
+                buttonEliminar.setVisibility(View.VISIBLE);
+                obtenerEquipo(id);
+                buttonEditar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        tipo.setFocusable(true);
+                        tipo.setTextIsSelectable(true);
+                        marca.setFocusable(true);
+                        marca.setTextIsSelectable(true);
+                        caracteristicas.setFocusable(true);
+                        caracteristicas.setTextIsSelectable(true);
+                        incluye.setFocusable(true);
+                        incluye.setTextIsSelectable(true);
+                        stock.setFocusable(true);
+                        stock.setTextIsSelectable(true);
+                        buttonEditar.setVisibility(View.GONE);
+                        buttonEliminar.setVisibility(View.GONE);
+                        btnagregar.setVisibility(View.VISIBLE);
+                        btnagregar.setText("Actualizar");
+                        btnagregar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String tipoEquipo = tipo.getText().toString().trim();
+                                String marcaEquipo = marca.getText().toString().trim();
+                                String crtEquipo = caracteristicas.getText().toString().trim();
+                                String incluyeEquipo = incluye.getText().toString().trim();
+                                String stockEquipo = stock.getText().toString().trim();
+                                if (tipoEquipo.isEmpty() || marcaEquipo.isEmpty() || crtEquipo.isEmpty() || incluyeEquipo.isEmpty() | stockEquipo.isEmpty()) {
+                                    Toast.makeText(AgregarEquipoActivity.this, "Los campos no pueden estar vacios", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    actualizarEquipo(tipoEquipo, marcaEquipo, crtEquipo, incluyeEquipo, stockEquipo, id);
+                                }
+                            }
+                        });
 
+                    }
+                });
+
+                buttonEliminar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mostrarAlertEquipEliminar(id);
+                    }
+                });
+            }
 
         }
 
@@ -211,14 +240,21 @@ public class AgregarEquipoActivity extends AppCompatActivity {
         frg.show(getSupportFragmentManager(), BottomSheetMenuFragment.class.getSimpleName());
     }
 
-    public void mostrarAlertEquipEliminar(){
+    public void mostrarAlertEquipEliminar(String id){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("¿Desea eliminar el equipo de la lista?");
         alertDialog.setPositiveButton("Aceptar",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Query query = firebaseFirestore.collection("equipos");
 
+                        FirestoreRecyclerOptions<Equipo> firestoreRecyclerOptions =
+                                new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+
+                        equipoITAdapter = new EquipoITAdapter(firestoreRecyclerOptions,AgregarEquipoActivity.this);
+                        equipoITAdapter.eliminarEquipo(id);
+                        startActivity(new Intent(AgregarEquipoActivity.this,ListaEquipoActivity.class));
                     }
                 });
         alertDialog.setNegativeButton("Cancelar",
@@ -229,5 +265,40 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                     }
                 });
         alertDialog.show();
+    }
+
+    public void setBottomNavigationView(){
+        bottomNavigationView = findViewById(R.id.bottomNavigationAgregarUserIT);
+        bottomNavigationView.clearAnimation();
+        bottomNavigationView.setSelectedItemId(R.id.page_gestion);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.page_inicio:
+                        Intent i  = new Intent(AgregarEquipoActivity.this,ListaEquipoActivity.class);
+                        i.putExtra("main","main");
+                        startActivity(i);
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.page_gestion:
+                        Intent i1  = new Intent(AgregarEquipoActivity.this,ListaEquipoActivity.class);
+                        i1.putExtra("lista","lista");
+                        startActivity(new Intent(i1));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.page_solicitudes:
+                        startActivity(new Intent(AgregarEquipoActivity.this,SolicitudActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.page_perfil:
+                        startActivity(new Intent(AgregarEquipoActivity.this,PerfilActivity.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 }

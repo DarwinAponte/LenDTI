@@ -6,36 +6,37 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.audiofx.DynamicsProcessing;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ActionMode;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
-import com.example.lendti.Adapter.EquipoAdapter;
+import com.example.lendti.Adapter.EquipoITAdapter;
 import com.example.lendti.Entity.Equipo;
 import com.example.lendti.R;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.getbase.floatingactionbutton.AddFloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListaEquipoActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    EquipoAdapter equipoAdapter;
+    EquipoITAdapter equipoITAdapter;
     FirebaseFirestore firebaseFirestore;
     FloatingActionButton floatadd;
     BottomNavigationView bottomNavigationView;
+    List<String> listaUltimos = new ArrayList<>();
+    FirestoreRecyclerOptions<Equipo> firestoreRecyclerOptions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,30 +45,60 @@ public class ListaEquipoActivity extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recycleViewSingle);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Query query = firebaseFirestore.collection("equipos");
-
-        FirestoreRecyclerOptions<Equipo> firestoreRecyclerOptions =
-                new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
-
-        equipoAdapter = new EquipoAdapter(firestoreRecyclerOptions,this);
-        equipoAdapter.notifyDataSetChanged();
-        recyclerView.setAdapter(equipoAdapter);
-
         floatadd = findViewById(R.id.floatingAgregarEquipo);
+
+        String lista = getIntent().getStringExtra("lista");
+        String main = getIntent().getStringExtra("main");
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if(lista==null || lista.equals("")){
+            floatadd.setVisibility(View.GONE);
+            firebaseFirestore.collection("equipos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    //Log.d(TAG, document.getId() + " => " + document.getData());
+                                    listaUltimos.add(document.getId());
+                                }
+                            } else {
+                                //Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+            if(listaUltimos.size()<=5){
+                Query query = firebaseFirestore.collection("equipos");
+                firestoreRecyclerOptions =
+                        new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+            }else{
+                Query query = firebaseFirestore.collection("equipos").endBefore(listaUltimos.get((listaUltimos.size()-1))).limit(5);
+                firestoreRecyclerOptions =
+                        new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+
+            }
+        }else{
+            Query query = firebaseFirestore.collection("equipos");
+            firestoreRecyclerOptions =
+                    new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
+        }
+        equipoITAdapter = new EquipoITAdapter(firestoreRecyclerOptions,this);
+        equipoITAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(equipoITAdapter);
+
+
         setBottomNavigationView();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        equipoAdapter.startListening();
+        equipoITAdapter.startListening();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        equipoAdapter.stopListening();
+        equipoITAdapter.stopListening();
     }
 
     public void agregarEquipo(View view){
@@ -84,7 +115,9 @@ public class ListaEquipoActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.page_inicio:
-                        startActivity(new Intent(ListaEquipoActivity.this,MainActivityUserIT.class));
+                        Intent i  = new Intent(ListaEquipoActivity.this,ListaEquipoActivity.class);
+                        i.putExtra("main","main");
+                        startActivity(i);
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_gestion:

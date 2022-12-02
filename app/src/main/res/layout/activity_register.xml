@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etNombreRegister" />
 
     <EditText
-        android:id="@+id/etDNIRegister"
+        android:id="@+id/etCodigoRegister"
         android:layout_width="284dp"
         android:layout_height="30dp"
         android:layout_marginTop="24dp"
@@ -108,7 +108,7 @@
         android:drawableStart="@drawable/ic_credit_card"
         android:drawablePadding="6dp"
         android:ems="10"
-        android:hint="DNI"
+        android:hint="Codigo"
         android:inputType="number"
         android:paddingStart="10dp"
         app:layout_constraintEnd_toEndOf="@+id/etApellidoRegister"

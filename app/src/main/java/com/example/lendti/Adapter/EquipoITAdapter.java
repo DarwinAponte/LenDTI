@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class EquipoAdapter extends FirestoreRecyclerAdapter<Equipo,EquipoAdapter.ViewHolder> {
+public class EquipoITAdapter extends FirestoreRecyclerAdapter<Equipo, EquipoITAdapter.ViewHolder> {
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     Activity activity;
@@ -33,7 +32,7 @@ public class EquipoAdapter extends FirestoreRecyclerAdapter<Equipo,EquipoAdapter
      *
      * @param options
      */
-    public EquipoAdapter(@NonNull FirestoreRecyclerOptions<Equipo> options,Activity activity) {
+    public EquipoITAdapter(@NonNull FirestoreRecyclerOptions<Equipo> options, Activity activity) {
         super(options);
         this.activity = activity;
     }

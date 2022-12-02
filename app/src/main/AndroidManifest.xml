@@ -54,14 +54,13 @@
             android:exported="false" />
         <activity
             android:name=".UserIT.SolicitudEspecificaActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".UserIT.SolicitudActivity"
             android:exported="false" />
         <activity
             android:name=".UserIT.ListaEquipoActivity"
-            android:exported="true">
-
+            android:exported="false">
         </activity>
         <activity
             android:name=".UserIT.AgregarEquipoActivity"
@@ -71,7 +70,8 @@
             android:exported="false" />
         <activity
             android:name=".LogueoActivity"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false" />

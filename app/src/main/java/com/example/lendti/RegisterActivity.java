@@ -14,23 +14,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lendti.Entity.Users;
+import com.example.lendti.Entity.Cliente;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -53,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnregistrar = findViewById(R.id.buttonRegister);
         EditText nombre = findViewById(R.id.etNombreRegister);
         EditText apellido = findViewById(R.id.etApellidoRegister);
-        EditText dni = findViewById(R.id.etDNIRegister);
+        EditText codigo = findViewById(R.id.etCodigoRegister);
         Spinner rol = findViewById(R.id.spinnerRol);
         EditText correo = findViewById(R.id.etCorreoRegister);
         EditText password = findViewById(R.id.etContraseniaRegister);
@@ -66,15 +63,15 @@ public class RegisterActivity extends AppCompatActivity {
                 String rolString = rol.getOnItemSelectedListener().toString();
                 String nombreString = nombre.getText().toString();
                 String apellidoString = apellido.getText().toString();
-                String dniString = dni.getText().toString();
+                String codigoString = codigo.getText().toString();
                 String correoString = correo.getText().toString();
                 String passwordString = password.getText().toString();
                 String password1String = password1.getText().toString();
 
-                if(nombreString.isEmpty() || apellidoString.isEmpty() || dniString.isEmpty() || correoString.isEmpty() || passwordString.isEmpty() || password1String.isEmpty() || rolString.isEmpty()){
+                if(nombreString.isEmpty() || apellidoString.isEmpty() || codigoString.isEmpty() || correoString.isEmpty() || passwordString.isEmpty() || password1String.isEmpty() || rolString.isEmpty()){
                     Toast.makeText(RegisterActivity.this,"Los campos no pueden ser vacios",Toast.LENGTH_SHORT).show();
                 }else{
-                    registerUsuario(nombreString,apellidoString,dniString,correoString,passwordString,password1String,rolString);
+                    registerUsuario(nombreString,apellidoString,codigoString,correoString,passwordString,password1String,rolString);
 
                 }
 
@@ -84,6 +81,30 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         firebaseFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error!=null){
+                    return;
+                }
+                for (QueryDocumentSnapshot document : value){
+                    listaDocuments.add(document.getId());
+                }
+            }
+        });
+
+        firebaseFirestore.collection("clientes").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error!=null){
+                    return;
+                }
+                for (QueryDocumentSnapshot document : value){
+                    listaDocuments.add(document.getId());
+                }
+            }
+        });
+
+        firebaseFirestore.collection("admins").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error!=null){
@@ -108,19 +129,15 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void registerUsuario(String nombre,String apellido,String dni,String correo,String password,String password1,String rol){
+    public void registerUsuario(String nombre,String apellido,String codigo,String correo,String password,String password1,String rol){
 
-
-        for(String id :listaDocuments){
-            Log.d("email",id);
-            if(id.equals(correo)){
-                exist = true;
-            }
+        if(listaDocuments.contains(correo)){
+            exist = true;
         }
 
         if(exist){
             Toast.makeText(RegisterActivity.this,"Este correo ya tiene una cuenta asociada",Toast.LENGTH_SHORT).show();
-        }else if(dni.length()!=8){
+        }else if(codigo.length()!=8){
             Toast.makeText(RegisterActivity.this,"El DNI debe contener 8 carácteres",Toast.LENGTH_SHORT).show();
         }else if(!password.equals(password1)){
             Toast.makeText(RegisterActivity.this,"Las contraseñas deben ser iguales",Toast.LENGTH_SHORT).show();
@@ -131,14 +148,8 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     String id = firebaseAuth.getCurrentUser().getUid();
-                    Users user = new Users();
-                    user.setNombre(nombre);
-                    user.setApellido(apellido);
-                    user.setDni(dni);
-                    user.setRol(rol);
-                    user.setCorreo(correo);
-                    user.setPassword(password);
-                    firebaseFirestore.collection("users").document(id).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    Cliente cliente = new Cliente(nombre,apellido,codigo,rol,correo,password,"");
+                    firebaseFirestore.collection("users").document(id).set(cliente).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             startActivity(new Intent(RegisterActivity.this,LogueoActivity.class));

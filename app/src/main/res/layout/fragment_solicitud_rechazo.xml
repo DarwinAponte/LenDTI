@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Dialogos.SolicitudRechazoFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/md_theme_light_primary"
+        android:elevation="6dp"
+        android:paddingStart="16dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Escriba porque rechazó esta solicitud: "
+            android:textColor="#ffff"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/editTextRazon"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:paddingStart="8dp"
+            android:hint="Escriba aquí"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp">
+
+            <Button
+                android:id="@+id/btnFragmentEnviar"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/md_theme_dark_onError"
+                android:text="Enviar" />
+
+            <Button
+                android:id="@+id/btnFragmentCancelar"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/md_theme_dark_onError"
+                android:text="Cancelar"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

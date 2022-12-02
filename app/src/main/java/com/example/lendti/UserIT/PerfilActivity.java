@@ -31,11 +31,15 @@ public class PerfilActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.page_inicio:
-                        startActivity(new Intent(PerfilActivity.this,MainActivityUserIT.class));
+                        Intent i  = new Intent(PerfilActivity.this,ListaEquipoActivity.class);
+                        i.putExtra("main","main");
+                        startActivity(i);
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_gestion:
-                        startActivity(new Intent(PerfilActivity.this,ListaEquipoActivity.class));
+                        Intent i1  = new Intent(PerfilActivity.this,ListaEquipoActivity.class);
+                        i1.putExtra("lista","lista");
+                        startActivity(new Intent(i1));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_solicitudes:
@@ -43,7 +47,6 @@ public class PerfilActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_perfil:
-
                         return true;
                 }
                 return false;

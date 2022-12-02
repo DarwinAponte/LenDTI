@@ -1,18 +1,24 @@
 package com.example.lendti.Entity;
 
-public class UserIT {
+public class Admin {
 
+    private String estado;
     private String nombre;
+    private String direccion;
     private String correo;
     private String codigo;
-    private String password;
+    private String horario;
     private String urlfoto;
 
-    public UserIT(String nombre, String correo, String codigo, String password) {
+
+
+    public Admin(String estado, String nombre, String direccion, String correo, String codigo, String horario) {
+        this.estado = estado;
         this.nombre = nombre;
+        this.direccion = direccion;
         this.correo = correo;
         this.codigo = codigo;
-        this.password = password;
+        this.horario = horario;
     }
 
     public String getUrlfoto() {
@@ -23,12 +29,28 @@ public class UserIT {
         this.urlfoto = urlfoto;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getCorreo() {
@@ -47,13 +69,11 @@ public class UserIT {
         this.codigo = codigo;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHorario() {
+        return horario;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHorario(String horario) {
+        this.horario = horario;
     }
-
-
 }
