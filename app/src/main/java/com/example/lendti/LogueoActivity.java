@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -34,6 +35,7 @@ public class LogueoActivity extends AppCompatActivity {
     EditText passwordLogueo;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
+    String rolLogueo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,67 +82,36 @@ public class LogueoActivity extends AppCompatActivity {
     }
 
     public void loginUsuario(String email,String password){
-        final String[] rolLogueo = {""};
+
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    Query query = firebaseFirestore.collection("clientes").whereEqualTo("correo", email);
+                    if(!query.count().toString().equals("0")){
+                        rolLogueo = "cliente";
+                    }else{
+                        query = firebaseFirestore.collection("users").whereEqualTo("correo", email);
+                        if(!query.count().toString().equals("0")){
+                            rolLogueo = "usuario";
+                        }else {
+                            query = firebaseFirestore.collection("admins").whereEqualTo("correo", email);
+                            if(!query.count().toString().equals("0")) {
+                                rolLogueo = "admin";
+                            }
+                        }
+                    }
 
-                    firebaseFirestore.collection("clientes")
-                            .whereEqualTo("correo", email)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            //Log.d(TAG, document.getId() + " => " + document.getData());
-                                            rolLogueo[0] = "cliente";
-                                        }
-                                    }
-                                }
-                            });
-
-                    firebaseFirestore.collection("users")
-                            .whereEqualTo("correo", email)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            //Log.d(TAG, document.getId() + " => " + document.getData());
-                                            rolLogueo[0] = "usuario";
-                                        }
-                                    }
-                                }
-                            });
-
-                    firebaseFirestore.collection("clientes")
-                            .whereEqualTo("correo", email)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            //Log.d(TAG, document.getId() + " => " + document.getData());
-                                            rolLogueo[0] = "admi";
-                                        }
-                                    }
-                                }
-                            });
-
-                    if(rolLogueo[0].equals("cliente")){
+                    if(rolLogueo.equals("cliente")){
                         Intent i = new Intent(LogueoActivity.this, ListaClienteActivity.class);
                         i.putExtra("main","main");
                         startActivity(i);
                         finish();
                         Toast.makeText(LogueoActivity.this,"Bienvenido Cliente",Toast.LENGTH_SHORT).show();
-                    }else if (rolLogueo[0].equals("usuario")){
+                    }else if (rolLogueo.equals("usuario")){
                         startActivity(new Intent(LogueoActivity.this, ListaEquipoActivity.class));
                         Toast.makeText(LogueoActivity.this,"Bienvenido UsuarioTI",Toast.LENGTH_SHORT).show();
-                    }else if(rolLogueo[0].equals("admi")){
+                    }else if(rolLogueo.equals("admin")){
                         startActivity(new Intent(LogueoActivity.this, AdminActivity.class));
                         Toast.makeText(LogueoActivity.this,"Bienvenido Administrador",Toast.LENGTH_SHORT).show();
                     }else {

@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnregistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String rolString = rol.getOnItemSelectedListener().toString();
+                String rolString = rol.getSelectedItem().toString();
                 String nombreString = nombre.getText().toString();
                 String apellidoString = apellido.getText().toString();
                 String codigoString = codigo.getText().toString();
@@ -139,6 +139,8 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this,"Este correo ya tiene una cuenta asociada",Toast.LENGTH_SHORT).show();
         }else if(codigo.length()!=8){
             Toast.makeText(RegisterActivity.this,"El DNI debe contener 8 carácteres",Toast.LENGTH_SHORT).show();
+        }else if(rol.equals("rol")){
+            Toast.makeText(RegisterActivity.this,"Eliga su rol",Toast.LENGTH_SHORT).show();
         }else if(!password.equals(password1)){
             Toast.makeText(RegisterActivity.this,"Las contraseñas deben ser iguales",Toast.LENGTH_SHORT).show();
         }else{
@@ -149,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     String id = firebaseAuth.getCurrentUser().getUid();
                     Cliente cliente = new Cliente(nombre,apellido,codigo,rol,correo,password,"");
-                    firebaseFirestore.collection("users").document(id).set(cliente).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    firebaseFirestore.collection("clientes").document(id).set(cliente).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             startActivity(new Intent(RegisterActivity.this,LogueoActivity.class));
@@ -159,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+                            Toast.makeText(RegisterActivity.this,"Fallo al registrarse",Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

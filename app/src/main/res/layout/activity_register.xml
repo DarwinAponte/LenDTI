@@ -172,8 +172,9 @@
 
         android:background="@drawable/custom_input"
         android:entries="@array/roles"
-        app:layout_constraintEnd_toEndOf="@+id/etDNIRegister"
-        app:layout_constraintStart_toStartOf="@+id/etDNIRegister"
-        app:layout_constraintTop_toBottomOf="@+id/etDNIRegister" />
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toEndOf="@+id/etCodigoRegister"
+        app:layout_constraintStart_toStartOf="@+id/etCodigoRegister"
+        app:layout_constraintTop_toBottomOf="@+id/etCodigoRegister" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

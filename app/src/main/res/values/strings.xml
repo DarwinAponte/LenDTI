@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">LenDTI</string>
     <string-array name="roles">
+        <item>rol</item>
         <item>alumno</item>
         <item>docente</item>
         <item>administrador</item>
