@@ -1,6 +1,7 @@
 package com.example.lendti;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearSnapHelper;
 
@@ -20,10 +21,13 @@ import com.example.lendti.Client.ListaClienteActivity;
 import com.example.lendti.UserIT.ListaEquipoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,7 +39,7 @@ public class LogueoActivity extends AppCompatActivity {
     EditText passwordLogueo;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-    String rolLogueo;
+    String rolLogueo="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class LogueoActivity extends AppCompatActivity {
         btnloguear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email =  emailLogueo.getText().toString();
+                String email =  emailLogueo.getText().toString().trim();
                 String password = passwordLogueo.getText().toString();
 
                 if(email.isEmpty() || password.isEmpty() ){
@@ -86,47 +90,57 @@ public class LogueoActivity extends AppCompatActivity {
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                System.out.println(email);
+                System.out.println(password);
                 if(task.isSuccessful()){
-                    Query query = firebaseFirestore.collection("clientes").whereEqualTo("correo", email);
-                    if(!query.count().toString().equals("0")){
-                        rolLogueo = "cliente";
-                    }else{
-                        query = firebaseFirestore.collection("users").whereEqualTo("correo", email);
-                        if(!query.count().toString().equals("0")){
-                            rolLogueo = "usuario";
-                        }else {
-                            query = firebaseFirestore.collection("admins").whereEqualTo("correo", email);
-                            if(!query.count().toString().equals("0")) {
-                                rolLogueo = "admin";
+                    firebaseFirestore.collection("clientes").whereEqualTo("correo",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                System.out.println(task.getResult().isEmpty());
+                                if(task.getResult().isEmpty()){
+                                    firebaseFirestore.collection("users").whereEqualTo("correo",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+                                                System.out.println(task.getResult().isEmpty());
+                                                if(task.getResult().isEmpty()){
+                                                    firebaseFirestore.collection("admins").whereEqualTo("correo",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                            if(task.isSuccessful()){
+                                                                System.out.println(task.getResult().isEmpty());
+                                                                if(task.getResult().isEmpty()){
+                                                                    Toast.makeText(LogueoActivity.this,"No esta asociado este correo",Toast.LENGTH_SHORT).show();
+                                                                }else {
+                                                                    startActivity(new Intent(LogueoActivity.this, AdminActivity.class));
+                                                                    Toast.makeText(LogueoActivity.this,"Bienvenido Administrador",Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                }else{
+                                                    Intent i = new Intent(LogueoActivity.this, ListaEquipoActivity.class);
+                                                    i.putExtra("main","main");
+                                                    startActivity(i);
+                                                    finish();
+                                                    Toast.makeText(LogueoActivity.this,"Bienvenido UsuarioTI",Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            }
+                                        }
+                                    });
+                                }else{
+                                    startActivity(new Intent(LogueoActivity.this, ListaClienteActivity.class));
+                                    finish();
+                                    Toast.makeText(LogueoActivity.this,"Bienvenido Cliente",Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
-                    }
-
-                    if(rolLogueo.equals("cliente")){
-                        startActivity(new Intent(LogueoActivity.this, ListaClienteActivity.class));
-                        finish();
-                        Toast.makeText(LogueoActivity.this,"Bienvenido Cliente",Toast.LENGTH_SHORT).show();
-                    }else if (rolLogueo.equals("usuario")){
-                        Intent i = new Intent(LogueoActivity.this, ListaEquipoActivity.class);
-                        i.putExtra("main","main");
-                        startActivity(i);
-                        finish();
-                        Toast.makeText(LogueoActivity.this,"Bienvenido UsuarioTI",Toast.LENGTH_SHORT).show();
-                    }else if(rolLogueo.equals("admin")){
-                        startActivity(new Intent(LogueoActivity.this, AdminActivity.class));
-                        Toast.makeText(LogueoActivity.this,"Bienvenido Administrador",Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(LogueoActivity.this,"No hay correo asociado",Toast.LENGTH_SHORT).show();
-                    }
-
+                    });
                 }else{
-                    Toast.makeText(LogueoActivity.this,"Error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogueoActivity.this,"Error en las credenciales",Toast.LENGTH_SHORT).show();
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LogueoActivity.this,"Error al iniciar sesión",Toast.LENGTH_SHORT).show();
             }
         });
 
