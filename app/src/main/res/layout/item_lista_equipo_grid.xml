@@ -44,8 +44,8 @@
             android:id="@+id/textViewStock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3 unidades"
-            android:layout_marginStart="6dp"/>
+            android:layout_marginStart="6dp"
+            android:text="3 unidades" />
 
         <LinearLayout
             android:layout_width="match_parent"

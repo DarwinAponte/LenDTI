@@ -101,6 +101,7 @@ public class PerfilActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_perfil:
+
                         return true;
                 }
                 return false;
