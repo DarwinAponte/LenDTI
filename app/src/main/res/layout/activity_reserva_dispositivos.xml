@@ -7,12 +7,40 @@
     android:background="@color/md_theme_light_onBackground"
     tools:context=".Client.ReservaDispositivosActivity">
 
+    <EditText
+        android:id="@+id/another"
+        android:layout_width="260dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewFoto"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageViewFoto"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFoto" />
+
+    <EditText
+        android:id="@+id/curso"
+        android:layout_width="260dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/motivo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/motivo"
+        app:layout_constraintTop_toBottomOf="@+id/motivo" />
+
     <ImageView
         android:id="@+id/imageViewLogo2"
-        android:layout_width="110dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="88dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
@@ -21,15 +49,29 @@
         android:id="@+id/textView35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="488dp"
+        android:layout_marginTop="64dp"
         android:text="FOTO DNI"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView32"
+        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintStart_toStartOf="@+id/textView32"
+        app:layout_constraintTop_toBottomOf="@+id/textView32"
         tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/programsNece"
+        android:layout_width="260dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="52dp"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/button7"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@+id/button6"
+        app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
     <Button
         android:id="@+id/button7"
@@ -45,12 +87,16 @@
         android:id="@+id/textView37"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
         android:layout_marginBottom="356dp"
-        android:text="TextView"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView36"
-        app:layout_constraintHorizontal_bias="0.641"
-        app:layout_constraintStart_toStartOf="@+id/textView36"/>
+        app:layout_constraintEnd_toEndOf="@+id/curso"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/curso"
+        app:layout_constraintTop_toBottomOf="@+id/curso"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="dfdfdf" />
 
     <Button
         android:id="@+id/button6"
@@ -62,29 +108,14 @@
         app:layout_constraintTop_toTopOf="@+id/textView37"
         app:layout_constraintVertical_bias="0.545" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName8"
-        android:layout_width="211dp"
-        android:layout_height="25dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView33"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView33"
-        app:layout_constraintTop_toBottomOf="@+id/textView33"
-        app:layout_constraintVertical_bias="0.036" />
-
     <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="122dp"
-        android:layout_height="119dp"
-        android:layout_marginBottom="136dp"
+        android:id="@+id/imageViewFoto"
+        android:layout_width="253dp"
+        android:layout_height="86dp"
+        android:layout_marginBottom="144dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_person" />
 
@@ -92,12 +123,12 @@
         android:id="@+id/textView33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="636dp"
+        android:layout_marginTop="604dp"
         android:text="OTROS"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintHorizontal_bias="0.076"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -108,108 +139,76 @@
         android:layout_marginStart="8dp"
         android:text="LenDTI"
         android:textColor="#FFFFFF"
-        android:textSize="38sp"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewLogo2"
         app:layout_constraintStart_toEndOf="@+id/imageViewLogo2"
         app:layout_constraintTop_toTopOf="@+id/imageViewLogo2"
         app:layout_constraintVertical_bias="0.428" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName5"
-        android:layout_width="269dp"
-        android:layout_height="20dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView30"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView30"
-        app:layout_constraintTop_toBottomOf="@+id/textView30"
-        app:layout_constraintVertical_bias="0.01" />
-
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
-        android:text="CURSO"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.072"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName6"
-        android:layout_width="270dp"
-        android:layout_height="19dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView31"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView31"
-        app:layout_constraintTop_toBottomOf="@+id/textView31"
-        app:layout_constraintVertical_bias="0.004" />
-
-    <TextView
-        android:id="@+id/textView30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
         android:text="MOTIVO"
         android:textColor="#FFFFFF"
-        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintHorizontal_bias="0.078"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.224" />
+
+    <EditText
+        android:id="@+id/motivo"
+        android:layout_width="260dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/textView34"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="@+id/textView34"
+        app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="CURSO"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/textView19"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView19"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <TextView
         android:id="@+id/textView36"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="60dp"
         android:text="TIEMPO DEL PRESTAMO"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.115"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/textView21"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <TextView
         android:id="@+id/textView32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="428dp"
+        android:layout_marginTop="60dp"
         android:text="PROGRAMAS NECESARIOS"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.115"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName7"
-        android:layout_width="268dp"
-        android:layout_height="23dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView32"
+        app:layout_constraintEnd_toEndOf="@+id/textView36"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView32"
-        app:layout_constraintTop_toBottomOf="@+id/textView32"
-        app:layout_constraintVertical_bias="0.003" />
+        app:layout_constraintStart_toStartOf="@+id/textView36"
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
     <TextView
         android:id="@+id/textView34"
@@ -217,24 +216,23 @@
         android:layout_height="wrap_content"
         android:text="Reserva de Equipos"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textViewNombre2"
-        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintHorizontal_bias="0.386"
         app:layout_constraintStart_toStartOf="@+id/imageViewLogo2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212" />
+        app:layout_constraintVertical_bias="0.152" />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reservar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.977" />
+        android:id="@+id/buttonReservar"
+        android:layout_width="111dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="12dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="@+id/another"
+        app:layout_constraintHorizontal_bias="0.469"
+        app:layout_constraintStart_toStartOf="@+id/another"
+        app:layout_constraintTop_toBottomOf="@+id/another" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

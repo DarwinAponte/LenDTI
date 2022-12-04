@@ -4,12 +4,15 @@ public class Solicitud {
 
     private String uidCliente;
     private String uidEquipo;
+    private String tipo;
+    private String marca;
     private String motivo;
     private String curso;
     private String time;
     private String programas;
     private String urlFotoDNI;
     private String otros;
+    private String estado;
 
 
     public String getUidCliente() {
@@ -74,5 +77,29 @@ public class Solicitud {
 
     public void setOtros(String otros) {
         this.otros = otros;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/otravistaaprobadas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_light_onBackground"
+    android:onClick="yaBasta"
+    tools:context=".Client.PerfilClienteActivity">
+
+    <TextView
+        android:id="@+id/textView54"
+        android:layout_width="280dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/custom_input"
+        android:paddingStart="10dp"
+        android:paddingTop="6dp"
+        android:text="correo@pucp.eddu.pe"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView52"
+        app:layout_constraintStart_toStartOf="@+id/textView52"
+        app:layout_constraintTop_toBottomOf="@+id/textView52" />
+
+    <ImageButton
+        android:id="@+id/imageButtonPerfil"
+        android:layout_width="37dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="100dp"
+        android:background="@drawable/background_mostaza"
+        android:backgroundTint="@color/ic_launcher_background"
+        android:onClick="yaBasta"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/imagViewPerfil2"
+        app:layout_constraintStart_toStartOf="@+id/imagViewPerfil2"
+        app:layout_constraintTop_toTopOf="@+id/imagViewPerfil2"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_camera" />
+
+    <TextView
+        android:id="@+id/textView53"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="CORREO"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView51"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView51"
+        app:layout_constraintTop_toBottomOf="@+id/textView51" />
+
+    <TextView
+        android:id="@+id/textView52"
+        android:layout_width="280dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/custom_input"
+        android:paddingStart="10dp"
+        android:paddingTop="6dp"
+        android:text="mi rey"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView50"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView50"
+        app:layout_constraintTop_toBottomOf="@+id/textView50" />
+
+    <TextView
+        android:id="@+id/textView50"
+        android:layout_width="280dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/custom_input"
+        android:paddingStart="10dp"
+        android:paddingTop="6dp"
+        android:text="Codigo"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView48"
+        app:layout_constraintStart_toStartOf="@+id/textView48"
+        app:layout_constraintTop_toBottomOf="@+id/textView48" />
+
+    <TextView
+        android:id="@+id/textView51"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Rol"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView49"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView49"
+        app:layout_constraintTop_toBottomOf="@+id/textView49" />
+
+    <TextView
+        android:id="@+id/textView49"
+        android:layout_width="63dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="60dp"
+        android:text="CODIGO"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView47"
+        app:layout_constraintStart_toStartOf="@+id/textView47"
+        app:layout_constraintTop_toBottomOf="@+id/textView47" />
+
+    <TextView
+        android:id="@+id/textView48"
+        android:layout_width="280dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="364dp"
+        android:background="@drawable/custom_input"
+        android:paddingStart="10dp"
+        android:paddingTop="6dp"
+        android:text="Nombre"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView47"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="328dp"
+        android:text="NOMBRE"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imagViewPerfil2"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/img_perfil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="128dp"
+        android:text="Perfil"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewLogo3"
+        android:layout_width="110dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textViewNombre3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="LenDTI"
+        android:textColor="#FFFFFF"
+        android:textSize="38sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewLogo3"
+        app:layout_constraintStart_toEndOf="@+id/imageViewLogo3"
+        app:layout_constraintTop_toTopOf="@+id/imageViewLogo3"
+        app:layout_constraintVertical_bias="0.51" />
+
+    <FrameLayout
+        android:id="@+id/FramePerfil"
+        android:layout_width="408dp"
+        android:layout_height="77dp"
+        android:layout_margin="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

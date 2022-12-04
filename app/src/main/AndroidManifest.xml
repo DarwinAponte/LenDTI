@@ -46,16 +46,21 @@
             android:exported="false" />
         <activity
             android:name=".Client.ListaClienteActivity"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
         <activity
             android:name=".Client.ListaDispositivosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Client.PerfilClienteActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.AdminActivity"
             android:exported="false" />
         <activity
             android:name=".UserIT.PerfilActivity"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
         <activity
             android:name=".UserIT.SolicitudEspecificaActivity"
             android:exported="false"/>

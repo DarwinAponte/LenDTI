@@ -1,7 +1,5 @@
 package com.example.lendti.Adapter;
 
-import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lendti.Entity.Equipo;
 import com.example.lendti.Entity.Solicitud;
 import com.example.lendti.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class ListadeSolicitudesAprobadasAdapter extends FirestoreRecyclerAdapter<Solicitud,ListadeSolicitudesAprobadasAdapter.ViewHolder>{
+public class ListaClienteAdapter extends FirestoreRecyclerAdapter<Solicitud,ListaClienteAdapter.ViewHolder> {
 
 
     /**
@@ -25,22 +22,24 @@ public class ListadeSolicitudesAprobadasAdapter extends FirestoreRecyclerAdapter
      *
      * @param options
      */
-    public ListadeSolicitudesAprobadasAdapter(@NonNull FirestoreRecyclerOptions<Solicitud> options) {
+    public ListaClienteAdapter(@NonNull FirestoreRecyclerOptions<Solicitud> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewholder, int position, @NonNull Solicitud solicitudes) {
-        viewholder.tipo.setText(solicitudes.getTipo());
-        viewholder.marca.setText(solicitudes.getMarca());
-        viewholder.time.setText(solicitudes.getTime());
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Solicitud solicitudes) {
+        holder.tipo.setText(solicitudes.getTipo());
+        holder.marca.setText(solicitudes.getMarca());
+        holder.time.setText(solicitudes.getTime());
+        holder.estado.setText(solicitudes.getEstado());
+
 
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_solicitud_lista, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lista_prestamos,parent,false);
         return new ViewHolder(view);
     }
 
@@ -48,13 +47,13 @@ public class ListadeSolicitudesAprobadasAdapter extends FirestoreRecyclerAdapter
         TextView tipo;
         TextView marca;
         TextView time;
-        TextView uid;
-
+        TextView estado;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tipo = itemView.findViewById(R.id.tipo);
-            marca = itemView.findViewById(R.id.marcaAprobados);
-            time = itemView.findViewById(R.id.TiempoPrestamoAprobadas);
+            tipo=itemView.findViewById(R.id.tipo2);
+            marca=itemView.findViewById(R.id.marca2);
+            time=itemView.findViewById(R.id.time2);
+            estado=itemView.findViewById(R.id.estado2);
         }
     }
 }

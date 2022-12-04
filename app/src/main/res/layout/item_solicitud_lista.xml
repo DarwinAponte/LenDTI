@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/md_theme_light_onSurface">
 
     <TextView
-        android:id="@+id/textViewPrestamo2"
+        android:id="@+id/TiempoPrestamoAprobadas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="28sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewTimePrestamo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
@@ -20,8 +22,8 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="214dp"
-        android:layout_height="264dp"
+        android:layout_width="97dp"
+        android:layout_height="170dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.053"
@@ -35,13 +37,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tipo:"
-        android:textSize="28sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.224" />
+        app:layout_constraintVertical_bias="0.225" />
 
     <TextView
         android:id="@+id/textViewMarcaCliente"
@@ -49,7 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Marca:"
-        android:textSize="28sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textViewTipoCliente"
         app:layout_constraintHorizontal_bias="0.0"
@@ -63,7 +67,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Tiempo de Préstamo:"
-        android:textSize="28sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textViewMarcaCliente"
         app:layout_constraintHorizontal_bias="0.004"
@@ -72,22 +77,24 @@
         app:layout_constraintVertical_bias="0.081" />
 
     <TextView
-        android:id="@+id/textViewType"
+        android:id="@+id/tipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="28sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewTipoCliente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewTipoCliente"
         app:layout_constraintTop_toTopOf="@+id/textViewTipoCliente" />
 
     <TextView
-        android:id="@+id/textViewMarc"
+        android:id="@+id/marcaAprobados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="28sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewMarcaCliente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"

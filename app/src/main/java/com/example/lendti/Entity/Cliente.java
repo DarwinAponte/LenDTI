@@ -1,23 +1,44 @@
 package com.example.lendti.Entity;
 
 public class Cliente {
-
     private String nombre;
     private String apellido;
-    private String codigo;
     private String rol;
-    private String correo;
+    private String codigo;
     private String password;
-    private String urlfoto;
+    private String correo;
+    private String urlFoto;
 
-    public Cliente(String nombre, String apellido, String codigo, String rol, String correo, String password, String urlfoto) {
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
-        this.rol = rol;
-        this.correo = correo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
-        this.urlfoto = urlfoto;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
     }
 
     public String getNombre() {
@@ -36,22 +57,6 @@ public class Cliente {
         this.apellido = apellido;
     }
 
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getUrlfoto() {
-        return urlfoto;
-    }
-
-    public void setUrlfoto(String urlfoto) {
-        this.urlfoto = urlfoto;
-    }
-
     public String getRol() {
         return rol;
     }
@@ -60,19 +65,13 @@ public class Cliente {
         this.rol = rol;
     }
 
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    public Cliente(String nombre, String apellido, String rol, String codigo,String correo, String password,  String urlFoto) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.rol = rol;
+        this.codigo = codigo;
         this.password = password;
+        this.correo = correo;
+        this.urlFoto = urlFoto;
     }
 }
