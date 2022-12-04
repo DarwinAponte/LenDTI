@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,7 +22,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class DispositivosAdapter extends FirestoreRecyclerAdapter<Equipo,DispositivosAdapter.ViewHolder> {
+import java.util.ArrayList;
+
+public class DispositivosAdapter extends FirestoreRecyclerAdapter<Equipo,DispositivosAdapter.ViewHolder>{
     Activity activity;
 
     /**

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.lendti.BlankFragment;
 import com.example.lendti.BottomSheetMenuFragmentPerfil;
 import com.example.lendti.R;
@@ -39,6 +40,7 @@ import com.google.firebase.storage.UploadTask;
 import butterknife.OnClick;
 
 public class PerfilClienteActivity extends AppCompatActivity {
+
     FragmentTransaction transaction;
     Fragment fragmentPerfil, fragmentInicio;
 
@@ -49,9 +51,7 @@ public class PerfilClienteActivity extends AppCompatActivity {
     StorageReference miStorage;
     private TextView clientNombre,clientCodigo,clientRol,clientCorreo;
     private String IDcliente;
-
-
-
+    ImageView imageViewla;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +66,14 @@ public class PerfilClienteActivity extends AppCompatActivity {
         clientCodigo=findViewById(R.id.textView50);
         clientRol=findViewById(R.id.textView52);
         clientCorreo=findViewById(R.id.textView54);
+        imageViewla=findViewById(R.id.imageView8);
         foto=findViewById(R.id.imageButtonPerfil);
         mAuth=FirebaseAuth.getInstance();
 
         firestore=FirebaseFirestore.getInstance();
         IDcliente=mAuth.getCurrentUser().getUid();
-        System.out.println(mAuth.getCurrentUser().getUid());
-        System.out.println(mAuth.getCurrentUser().getEmail());
 
+        getSupportFragmentManager().beginTransaction().add(R.id.FramePerfil,fragmentInicio).commit();
 
 
 
@@ -90,6 +90,18 @@ public class PerfilClienteActivity extends AppCompatActivity {
                         clientCodigo.setText(document.getString("codigo"));
                         clientRol.setText(document.getString("rol"));
                         clientCorreo.setText(document.getString("correo"));
+                        String fotoPerfil=document.getString("urlFoto");
+                        try {
+                            if(!fotoPerfil.equals("")){
+                                Toast.makeText(PerfilClienteActivity.this,"Cargando foto",Toast.LENGTH_SHORT).show();
+                                Glide.with(PerfilClienteActivity.this)
+                                        .load(fotoPerfil)
+                                        .into(imageViewla);
+
+                            }
+                        }catch (Exception e){
+                            System.out.println("Holaaa Stephania");
+                        }
 
                     } else {
                         Log.d(TAG, "No such document");
@@ -99,8 +111,6 @@ public class PerfilClienteActivity extends AppCompatActivity {
                 }
             }
         });
-
-        getSupportFragmentManager().beginTransaction().add(R.id.FramePerfil,fragmentInicio).commit();
     }
 
 

@@ -5,9 +5,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
+import androidx.appcompat.widget.SearchView;
 
 import com.example.lendti.Adapter.DispositivosAdapter;
 import com.example.lendti.Entity.Equipo;
@@ -17,35 +20,41 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListaDispositivosActivity extends AppCompatActivity {
 
     RecyclerView mRecycler;
     DispositivosAdapter mdispositivosAdapter;
     FirebaseFirestore firestore;
     FirebaseAuth mAuth;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_dispositivos);
+
         firestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        String uid = mAuth.getCurrentUser().getUid();
         mRecycler = findViewById(R.id.recyclerViewdispositivos);
-        //mRecycler.setLayoutManager(new LinearLayoutManager(ListaDispositivosActivity.this));
+        searchView=findViewById(R.id.searchView);
+
+
         mRecycler.setLayoutManager(new GridLayoutManager(this,2));
         Query query = firestore.collection("equipos");
         FirestoreRecyclerOptions<Equipo> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
         mdispositivosAdapter = new DispositivosAdapter(firestoreRecyclerOptions,ListaDispositivosActivity.this);
-        //FirestoreRecyclerOptions<Equipo> firestoreRecyclerOptions =
-        //        new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query, Equipo.class).build();
-        //mdispositivosAdapter = new DispositivosAdapter(firestoreRecyclerOptions);
         mdispositivosAdapter.notifyDataSetChanged();
         mRecycler.setAdapter(mdispositivosAdapter);
 
+        search_View();
+
 
     }
+
 
     @Override
     protected void onStart() {
@@ -65,5 +74,29 @@ public class ListaDispositivosActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SolicitudDevicesActivity.class);
         startActivity(intent);
+    }
+    private void search_View(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                textSearch(s);
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                textSearch(s);
+                return false;
+            }
+        });
+    }
+    public void textSearch(String s){
+        Query query = firestore.collection("equipos");
+        FirestoreRecyclerOptions<Equipo> firestoreRecyclerOptions =
+                new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query.orderBy("tipo").startAt(s)
+                        .endAt(s+"~"),Equipo.class).build();
+        mdispositivosAdapter = new DispositivosAdapter(firestoreRecyclerOptions,ListaDispositivosActivity.this);
+        mdispositivosAdapter.notifyDataSetChanged();
+        mRecycler.setAdapter(mdispositivosAdapter);
+
     }
 }

@@ -23,21 +23,6 @@
         app:layout_constraintStart_toStartOf="@+id/textView52"
         app:layout_constraintTop_toBottomOf="@+id/textView52" />
 
-    <ImageButton
-        android:id="@+id/imageButtonPerfil"
-        android:layout_width="37dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="100dp"
-        android:background="@drawable/background_mostaza"
-        android:backgroundTint="@color/ic_launcher_background"
-        android:onClick="yaBasta"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/imagViewPerfil2"
-        app:layout_constraintStart_toStartOf="@+id/imagViewPerfil2"
-        app:layout_constraintTop_toTopOf="@+id/imagViewPerfil2"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ic_camera" />
-
     <TextView
         android:id="@+id/textView53"
         android:layout_width="wrap_content"
@@ -131,16 +116,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imagViewPerfil2"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="200dp"
-        android:background="@drawable/img_perfil"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView46"
         android:layout_width="wrap_content"
@@ -187,4 +162,35 @@
         app:layout_constraintVertical_bias="1.0">
 
     </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/imageButtonPerfil"
+        android:layout_width="37dp"
+        android:layout_height="32dp"
+        android:background="@drawable/background_mostaza"
+        android:backgroundTint="@color/ic_launcher_background"
+        android:onClick="yaBasta"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:srcCompat="@drawable/ic_camera" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/textView46"
+        app:layout_constraintStart_toStartOf="@+id/textView46"
+        app:layout_constraintTop_toBottomOf="@+id/textView46">
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:srcCompat="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
