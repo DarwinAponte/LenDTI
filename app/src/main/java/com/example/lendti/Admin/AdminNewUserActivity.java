@@ -54,7 +54,7 @@ public class AdminNewUserActivity extends AppCompatActivity {
                 crearNuevoUsuarioTI();
             }
         });
-        firebaseFirestore.collection("admins").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firebaseFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error!=null){
@@ -86,7 +86,7 @@ public class AdminNewUserActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     String UserId = firebaseAuth.getCurrentUser().getUid();
                     UserIT userITNew= new UserIT(nombre,correo,codigo,passwd,"");
-                    firebaseFirestore.collection("userTI").document(UserId).set(userITNew).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    firebaseFirestore.collection("users").document(UserId).set(userITNew).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             startActivity(new Intent(AdminNewUserActivity.this,AdminActivity.class));
