@@ -4,11 +4,42 @@ public class Cliente {
     private String nombre;
     private String apellido;
     private String rol;
-    private String dni;
     private String codigo;
     private String password;
-    private String password1;
     private String correo;
+    private String urlFoto;
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
 
     public String getNombre() {
         return nombre;
@@ -34,21 +65,13 @@ public class Cliente {
         this.rol = rol;
     }
 
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public Cliente(String nombre, String apellido, String rol, String codigo, String correo, String password, String password1) {
+    public Cliente(String nombre, String apellido, String rol, String codigo,String correo, String password,  String urlFoto) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.rol = rol;
         this.codigo = codigo;
         this.password = password;
-        this.password1 = password1;
         this.correo = correo;
+        this.urlFoto = urlFoto;
     }
 }

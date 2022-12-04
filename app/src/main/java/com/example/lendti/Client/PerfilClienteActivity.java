@@ -5,46 +5,77 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.lendti.BlankFragment;
+import com.example.lendti.BottomSheetMenuFragmentPerfil;
 import com.example.lendti.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import butterknife.OnClick;
 
 public class PerfilClienteActivity extends AppCompatActivity {
+    FragmentTransaction transaction;
+    Fragment fragmentPerfil, fragmentInicio;
+
+    ImageButton foto;
+
     FirebaseFirestore firestore;
     FirebaseAuth mAuth;
+    StorageReference miStorage;
     private TextView clientNombre,clientCodigo,clientRol,clientCorreo;
-    private String IDcliente,clientID,clientEmail;
+    private String IDcliente;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_cliente);
+
+        fragmentPerfil = new BottomSheetMenuFragmentPerfil();
+        fragmentInicio = new BlankFragment();
+        miStorage= FirebaseStorage.getInstance().getReference();
+
         clientNombre=findViewById(R.id.textView48);
-        String jose=clientNombre.getText().toString();
         clientCodigo=findViewById(R.id.textView50);
         clientRol=findViewById(R.id.textView52);
         clientCorreo=findViewById(R.id.textView54);
+        foto=findViewById(R.id.imageButtonPerfil);
         mAuth=FirebaseAuth.getInstance();
 
         firestore=FirebaseFirestore.getInstance();
         IDcliente=mAuth.getCurrentUser().getUid();
         System.out.println(mAuth.getCurrentUser().getUid());
         System.out.println(mAuth.getCurrentUser().getEmail());
+
+
+
 
         DocumentReference docRef = firestore.collection("clientes").document(IDcliente);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -56,7 +87,7 @@ public class PerfilClienteActivity extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         clientNombre.setText(document.getString("nombre"));
-                        clientCodigo.setText(document.getString("dni"));
+                        clientCodigo.setText(document.getString("codigo"));
                         clientRol.setText(document.getString("rol"));
                         clientCorreo.setText(document.getString("correo"));
 
@@ -69,13 +100,19 @@ public class PerfilClienteActivity extends AppCompatActivity {
             }
         });
 
-
+        getSupportFragmentManager().beginTransaction().add(R.id.FramePerfil,fragmentInicio).commit();
     }
-    public void otraVista(View view){
-        Intent intent = new Intent(this,ListaClienteActivity.class);
-        startActivity(intent);
 
 
+    public void yaBasta(View view){
+        transaction=getSupportFragmentManager().beginTransaction();
+        switch (view.getId()){
+            case R.id.imageButtonPerfil:transaction.replace(R.id.FramePerfil,fragmentPerfil);
+                break;
+            case R.id.imageButton4:transaction.replace(R.id.FramePerfil,fragmentInicio);
+                break;
+        }
+        transaction.commit();
     }
 
 

@@ -31,13 +31,14 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
     EditText motivo,curso,programas;
     String tipo,marca;
     String uidUsuario;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_dispositivos);
 
-        String id =  getIntent().getStringExtra("idEquipo");
+        id =  getIntent().getStringExtra("idEquipo");
         System.out.println(id);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -82,7 +83,8 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
         map.put("tipo", tipo2);
         map.put("marca", marca2);
         map.put("estado","pendiente");
-        map.put("uid",uidUsuario);
+        map.put("uidCliente",uidUsuario);
+        map.put("uidEquipo",id);
         firebaseFirestore.collection("solicitudes").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {

@@ -150,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     String id = firebaseAuth.getCurrentUser().getUid();
-                    Cliente cliente = new Cliente(nombre,apellido,rol,codigo,correo,password,password1);
+                    Cliente cliente = new Cliente(nombre,apellido,rol,codigo,correo,password,"");
                     firebaseFirestore.collection("clientes").document(id).set(cliente).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

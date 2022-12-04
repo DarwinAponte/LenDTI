@@ -52,6 +52,9 @@
             android:name=".Client.ListaDispositivosActivity"
             android:exported="false" />
         <activity
+            android:name=".Client.PerfilClienteActivity"
+            android:exported="false" />
+        <activity
             android:name=".Admin.AdminActivity"
             android:exported="false" />
         <activity

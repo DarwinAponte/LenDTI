@@ -59,4 +59,9 @@ public class ListaSolicitudesActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void perfil(View view){
+        Intent intent = new Intent(this,PerfilClienteActivity.class);
+        startActivity(intent);
+    }
+
 }
