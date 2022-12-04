@@ -11,6 +11,10 @@ public class Admin {
     private String urlfoto;
     private String password;
 
+    public Admin(){
+
+    }
+
 
 
 

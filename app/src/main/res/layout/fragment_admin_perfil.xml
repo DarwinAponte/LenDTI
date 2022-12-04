@@ -12,7 +12,7 @@
         android:background="@color/md_theme_dark_background">
 
         <TextView
-            android:id="@+id/textView62"
+            android:id="@+id/horarioPerfilAdmin"
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_marginStart="40dp"
@@ -34,14 +34,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="8dp"
-            android:text="Horario"
+            android:text="Dirección Actual"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView57" />
+            app:layout_constraintTop_toBottomOf="@+id/telefonoPerfilAdmin" />
 
         <TextView
-            android:id="@+id/textView60"
+            android:id="@+id/dniPerfilAdmin"
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_marginStart="16dp"
@@ -53,7 +53,7 @@
             android:text="7412589"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView57"
+            app:layout_constraintStart_toEndOf="@+id/telefonoPerfilAdmin"
             app:layout_constraintTop_toBottomOf="@+id/textView59" />
 
         <TextView
@@ -62,14 +62,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="DNI"
+            android:text="Codigo"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/textView60"
-            app:layout_constraintTop_toBottomOf="@+id/textView56" />
+            app:layout_constraintStart_toStartOf="@+id/dniPerfilAdmin"
+            app:layout_constraintTop_toBottomOf="@+id/correoPerfilAdmin" />
 
         <TextView
-            android:id="@+id/textView57"
+            android:id="@+id/telefonoPerfilAdmin"
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_marginStart="40dp"
@@ -90,14 +90,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="8dp"
-            android:text="Telefono"
+            android:text="Horario"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView56" />
+            app:layout_constraintTop_toBottomOf="@+id/correoPerfilAdmin" />
 
         <TextView
-            android:id="@+id/textView56"
+            android:id="@+id/correoPerfilAdmin"
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_marginStart="40dp"
@@ -123,10 +123,10 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView54" />
+            app:layout_constraintTop_toBottomOf="@+id/nombrePerfilAdmin" />
 
         <TextView
-            android:id="@+id/textView54"
+            android:id="@+id/nombrePerfilAdmin"
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_marginStart="40dp"
@@ -150,7 +150,7 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/conductorProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/fotoPerfilAdmin" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -213,7 +213,7 @@
 
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/conductorProfile"
+            android:id="@+id/fotoPerfilAdmin"
             android:layout_width="180dp"
             android:layout_height="180dp"
             android:layout_marginTop="16dp"
@@ -226,24 +226,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
+        <ImageView
+            android:id="@+id/btnChangeProfile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="6dp"
+            android:background="@drawable/background_mostaza"
             android:src="@drawable/ic_camera"
-            app:layout_constraintBottom_toBottomOf="@+id/conductorProfile"
-            app:layout_constraintEnd_toEndOf="@+id/conductorProfile" />
+            app:layout_constraintBottom_toBottomOf="@+id/fotoPerfilAdmin"
+            app:layout_constraintEnd_toEndOf="@+id/fotoPerfilAdmin" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btn_adminPerfilLogOUt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Cerrar sesion"
-            app:layout_constraintEnd_toEndOf="@+id/textView62"
-            app:layout_constraintStart_toStartOf="@+id/textView62"
-            app:layout_constraintTop_toBottomOf="@+id/textView62" />
+            app:layout_constraintEnd_toEndOf="@+id/horarioPerfilAdmin"
+            app:layout_constraintStart_toStartOf="@+id/horarioPerfilAdmin"
+            app:layout_constraintTop_toBottomOf="@+id/horarioPerfilAdmin" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
