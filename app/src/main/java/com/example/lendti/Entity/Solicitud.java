@@ -13,7 +13,16 @@ public class Solicitud {
     private String urlFotoDNI;
     private String otros;
     private String estado;
+    private String cantidad;
 
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
+    }
 
     public String getUidCliente() {
         return uidCliente;

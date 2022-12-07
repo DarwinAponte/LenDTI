@@ -50,8 +50,6 @@ public class SolicitudDevicesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SolicitudDevicesActivity.this,ReservaDispositivosActivity.class);
                 intent.putExtra("idEquipo",id);
-                System.out.println(id);
-                System.out.println("HOLAAAA JOSEE");
                 startActivity(intent);
             }
         });

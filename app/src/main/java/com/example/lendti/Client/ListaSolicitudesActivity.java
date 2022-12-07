@@ -33,7 +33,7 @@ public class ListaSolicitudesActivity extends AppCompatActivity {
         String uid = mAuth.getCurrentUser().getUid();
         mRecycler = findViewById(R.id.recyclerViewSolicitudes);
         mRecycler.setLayoutManager(new LinearLayoutManager(ListaSolicitudesActivity.this));
-        Query query = firestore.collection("solicitudes").whereEqualTo("uid",uid).whereEqualTo("estado","pendiente");
+        Query query = firestore.collection("solicitudes").whereEqualTo("uidCliente",uid).whereEqualTo("estado","pendiente");
         FirestoreRecyclerOptions<Solicitud> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Solicitud>().setQuery(query, Solicitud.class).build();
         mListaAdapter = new ListaClienteAdapter(firestoreRecyclerOptions);

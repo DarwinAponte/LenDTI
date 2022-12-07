@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.Arrays;
+
 public class HistorialPrestamosActivity extends AppCompatActivity {
 
     RecyclerView mRecycler;
@@ -32,7 +34,7 @@ public class HistorialPrestamosActivity extends AppCompatActivity {
         String uid = mAuth.getCurrentUser().getUid();
         mRecycler = findViewById(R.id.recyclerViewHistorialPrestamos);
         mRecycler.setLayoutManager(new LinearLayoutManager(HistorialPrestamosActivity.this));
-        Query query = firestore.collection("solicitudes").whereEqualTo("uid",uid);
+        Query query = firestore.collection("solicitudes").whereEqualTo("uidCliente",uid).whereIn("estado", Arrays.asList("rechazada","aprobada"));
         FirestoreRecyclerOptions<Solicitud> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Solicitud>().setQuery(query, Solicitud.class).build();
         mListaAdapter = new ListaClienteAdapter(firestoreRecyclerOptions);

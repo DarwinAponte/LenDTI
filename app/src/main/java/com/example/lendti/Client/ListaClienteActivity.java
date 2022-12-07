@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lendti.Adapter.ListadeSolicitudesAprobadasAdapter;
+import com.example.lendti.Entity.Equipo;
 import com.example.lendti.Entity.Solicitud;
 import com.example.lendti.R;
 import com.example.lendti.UserIT.AgregarEquipoActivity;
@@ -47,11 +48,10 @@ public class ListaClienteActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         String uid = mAuth.getCurrentUser().getUid();
-        System.out.println(uid);
+
         mRecycler = findViewById(R.id.recyclerViewAprobadas);
         mRecycler.setLayoutManager(new LinearLayoutManager(ListaClienteActivity.this));
-        Query query = firestore.collection("solicitudes").whereEqualTo("uid",uid).whereEqualTo("estado","aprobada");
-
+        Query query = firestore.collection("solicitudes").whereEqualTo("uidCliente",uid).whereEqualTo("estado","aprobada");
         FirestoreRecyclerOptions<Solicitud> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Solicitud>().setQuery(query, Solicitud.class).build();
         mListaAdapter = new ListadeSolicitudesAprobadasAdapter(firestoreRecyclerOptions);

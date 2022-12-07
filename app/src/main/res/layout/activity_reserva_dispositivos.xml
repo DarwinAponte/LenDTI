@@ -16,10 +16,10 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewFoto"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageViewFoto"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewFoto" />
+        app:layout_constraintEnd_toEndOf="@+id/imageViewFotodni"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="@+id/imageViewFotodni"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFotodni" />
 
     <EditText
         android:id="@+id/curso"
@@ -68,51 +68,55 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/button7"
+        app:layout_constraintEnd_toEndOf="@+id/buttonMas"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="@+id/button6"
-        app:layout_constraintTop_toBottomOf="@+id/textView37" />
+        app:layout_constraintStart_toStartOf="@+id/buttonMenos"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCantidad" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/buttonMas"
         android:layout_width="55dp"
         android:layout_height="41dp"
+        android:layout_marginStart="20dp"
         android:text="+"
-        app:layout_constraintBottom_toBottomOf="@+id/textView37"
-        app:layout_constraintStart_toEndOf="@+id/textView37"
-        app:layout_constraintTop_toTopOf="@+id/textView37"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCantidad"
+        app:layout_constraintStart_toEndOf="@+id/textViewCantidad"
+        app:layout_constraintTop_toTopOf="@+id/textViewCantidad"
         app:layout_constraintVertical_bias="0.545" />
 
     <TextView
-        android:id="@+id/textView37"
+        android:id="@+id/textViewCantidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:layout_marginBottom="356dp"
         android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/curso"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/curso"
         app:layout_constraintTop_toBottomOf="@+id/curso"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="dfdfdf" />
+        tools:text="Cantidad" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/buttonMenos"
         android:layout_width="53dp"
         android:layout_height="41dp"
+        android:layout_marginEnd="20dp"
         android:text="-"
-        app:layout_constraintBottom_toBottomOf="@+id/textView37"
-        app:layout_constraintEnd_toStartOf="@+id/textView37"
-        app:layout_constraintTop_toTopOf="@+id/textView37"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCantidad"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCantidad"
+        app:layout_constraintTop_toTopOf="@+id/textViewCantidad"
         app:layout_constraintVertical_bias="0.545" />
 
     <ImageView
-        android:id="@+id/imageViewFoto"
-        android:layout_width="253dp"
-        android:layout_height="86dp"
+        android:id="@+id/imageViewFotodni"
+        android:layout_width="330dp"
+        android:layout_height="88dp"
         android:layout_marginBottom="144dp"
+        android:onClick="confe"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.455"
@@ -234,5 +238,16 @@
         app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="@+id/another"
         app:layout_constraintTop_toBottomOf="@+id/another" />
+
+    <FrameLayout
+        android:id="@+id/frameReserva"
+        android:layout_width="408dp"
+        android:layout_height="77dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

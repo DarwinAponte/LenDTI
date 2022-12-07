@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cameraFragment"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reservaCamera"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="#FFDDB0">
@@ -15,17 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView25"
+            android:id="@+id/textView26"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="4dp"
-            android:text="Foto"
-            android:textSize="22sp" />
+            android:text="Foto del DNI"
+            android:textSize="22sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,26 +42,29 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButtonCamera2"
+                android:id="@+id/imageButtonCameraReserva"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_camera" />
+                app:srcCompat="@drawable/ic_camera">
+            </ImageButton>
 
             <ImageButton
-                android:id="@+id/imageButtonGaleria2"
+
+                android:id="@+id/GaleriaReserva2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                app:srcCompat="@drawable/ic_galery" />
+                app:srcCompat="@drawable/ic_galery"></ImageButton>
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/imageButton4Reserva"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="170dp"
                 android:backgroundTint="#00FFFFFF"
-                android:onClick="yaBasta"
+                android:onClick="confe"
                 app:srcCompat="@drawable/ic_trash_4" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -71,18 +75,17 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textCamera"
+                android:id="@+id/textCameraReserva"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Camara" />
 
             <TextView
-                android:id="@+id/textGaleria"
+                android:id="@+id/textGaleriaReserva"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
                 android:text="Galeria" />
         </LinearLayout>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

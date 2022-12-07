@@ -57,13 +57,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAprobadas"
-        android:layout_width="386dp"
-        android:layout_height="446dp"
+        android:layout_width="356dp"
+        android:layout_height="489dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.436"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606">
+        app:layout_constraintVertical_bias="0.743">
 
     </androidx.recyclerview.widget.RecyclerView>
 

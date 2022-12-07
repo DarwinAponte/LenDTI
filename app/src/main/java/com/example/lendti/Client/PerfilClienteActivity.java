@@ -93,7 +93,7 @@ public class PerfilClienteActivity extends AppCompatActivity {
                         String fotoPerfil=document.getString("urlFoto");
                         try {
                             if(!fotoPerfil.equals("")){
-                                Toast.makeText(PerfilClienteActivity.this,"Cargando foto",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(PerfilClienteActivity.this,"Cargando foto",Toast.LENGTH_SHORT).show();
                                 Glide.with(PerfilClienteActivity.this)
                                         .load(fotoPerfil)
                                         .into(imageViewla);
