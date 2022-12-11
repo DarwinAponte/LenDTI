@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.resource.bitmap.BitmapImageDecoderResourceDecoder;
 import com.example.lendti.BlankFragment;
 import com.example.lendti.BlankFragmentReserva;
 import com.example.lendti.BottomSheetMenuFragmentPerfil;
@@ -26,10 +28,15 @@ import com.example.lendti.Entity.Equipo;
 import com.example.lendti.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -41,11 +48,14 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,6 +64,10 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth mAuth;
+    StorageReference miStorage;
+    String storagePath = "images/";
+    String storagePath1 = "DNI/";
+    String photo = "photo/";
     Button reservar,sumar,restar;
     EditText motivo,curso,programas,otros;
     TextView cantidad;
@@ -66,10 +80,12 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
     FragmentTransaction transaction1;
     Fragment fragmentReserva, fragmentInicio1;
     ImageView imageViewfotoDNI;
-    Mat mat,rgb;
+    Mat rgb;
     MatOfRect rects;
     CascadeClassifier cascadeClassifier;
+    ImageView bitmap1;
     Bundle bundle=new Bundle();
+    String DNIURL;
 
 
     @Override
@@ -119,6 +135,7 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        miStorage= FirebaseStorage.getInstance().getReference();
         uidUsuario=mAuth.getCurrentUser().getUid();
 
         motivo=findViewById(R.id.motivo);
@@ -184,7 +201,7 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
                         cascadeClassifier.detectMultiScale(rgb, rects, 1.1, 2);
                         for (Rect rect : rects.toList()) {
                             Mat submat = rgb.submat(rect);
-                            Imgproc.blur(submat, submat, new Size(50, 50));
+                            Imgproc.blur(submat, submat, new Size(100, 100));
                             submat.release();
                         }
 
@@ -199,6 +216,7 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
                 }
             }
         }
+        bitmap1=imageViewfotoDNI;
 
 
 
@@ -260,12 +278,13 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
                 String otros2=otros.getText().toString().trim();
                 String tipo2 =tipo.trim();
                 String marca2=marca.trim();
+                ImageView dni = bitmap1;
 
 
-                if(motivo2.isEmpty() || curs2.isEmpty() || programas2.isEmpty() || cantidad2.equals("0") || otros2.isEmpty()){
+                if(motivo2.isEmpty() || curs2.isEmpty() || programas2.isEmpty() || cantidad2.equals("0") || otros2.isEmpty() || dni == null){
                     Toast.makeText(getApplicationContext(),"Ingresar los datos", Toast.LENGTH_SHORT).show();
                 }else{
-                    putSolicitud(motivo2,curs2,programas2,tipo2,marca2,cantidad2,otros2);
+                    putSolicitud(motivo2,curs2,programas2,tipo2,marca2,cantidad2,otros2,dni);
 
                 }
             }
@@ -275,31 +294,67 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
     }
 
 
-    private void putSolicitud(String motivo2, String curs2, String programas2, String tipo2,String marca2,String cantidad2,String otros2) {
-        Map<String,Object> map= new HashMap<>();
-        map.put("motivo", motivo2);
-        map.put("curso", curs2);
-        map.put("programas", programas2);
-        map.put("tipo", tipo2);
-        map.put("marca", marca2);
-        map.put("estado","pendiente");
-        map.put("uidCliente",uidUsuario);
-        map.put("uidEquipo",id);
-        map.put("cantidad",cantidad2);
-        map.put("otros",otros2);
-        firebaseFirestore.collection("solicitudes").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(getApplicationContext(),"Creado de manera exitosa", Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(ReservaDispositivosActivity.this,ListaSolicitudesActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(),"error al ingresar", Toast.LENGTH_SHORT).show();
+    private void putSolicitud(String motivo2, String curs2, String programas2, String tipo2,String marca2,String cantidad2,String otros2, ImageView dni) {
 
+        String subirStorageSolicitud = storagePath+ "" +storagePath1 +""+photo + "" + mAuth.getCurrentUser().getUid()+"";
+
+        String timeStampDNI = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
+
+        BitmapDrawable drawable =(BitmapDrawable) dni.getDrawable();
+        Bitmap bitmapDNISI=drawable.getBitmap();
+        ByteArrayOutputStream baosDNI = new ByteArrayOutputStream();
+        bitmapDNISI.compress(Bitmap.CompressFormat.JPEG,100,baosDNI);
+        StorageReference filePathDNI = miStorage.child(subirStorageSolicitud).child(timeStampDNI);
+        byte[] datas= baosDNI.toByteArray();
+        UploadTask uploadTask=filePathDNI.putBytes(datas);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> uriTask =taskSnapshot.getStorage().getDownloadUrl();
+                while(!uriTask.isSuccessful());
+                if (uriTask.isSuccessful()){
+                    uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            DNIURL=uri.toString();
+
+                            Timestamp timestampInicio = Timestamp.now();
+
+                            String timeStampSolicitudFIN ="";
+
+                            Map<String,Object> map= new HashMap<>();
+                            map.put("motivo", motivo2);
+                            map.put("curso", curs2);
+                            map.put("programas", programas2);
+                            map.put("tipo", tipo2);
+                            map.put("marca", marca2);
+                            map.put("estado","pendiente");
+                            map.put("uidCliente",uidUsuario);
+                            map.put("uidEquipo",id);
+                            map.put("cantidad",cantidad2);
+                            map.put("otros",otros2);
+                            map.put("FotoDNI",DNIURL);
+                            map.put("FechaSolicitudInicio",timestampInicio);
+                            map.put("FechaSolicitudFin",timeStampSolicitudFIN);
+
+                            firebaseFirestore.collection("solicitudes").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(getApplicationContext(),"Creado de manera exitosa", Toast.LENGTH_SHORT).show();
+                                    Intent intent=new Intent(ReservaDispositivosActivity.this,ListaSolicitudesActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(),"error al ingresar", Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+                        }
+                    });
+                }
             }
         });
     }
