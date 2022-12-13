@@ -8,7 +8,7 @@ public class Solicitud {
     private String marca;
     private String motivo;
     private String curso;
-    private String timeInicio;
+    private String tiempoInicio;
     private String programas;
     private String urlFotoDNI;
     private String otros;
@@ -24,12 +24,12 @@ public class Solicitud {
         this.tiempoFin = tiempoFin;
     }
 
-    public String getTimeInicio() {
-        return timeInicio;
+    public String getTiempoInicio() {
+        return tiempoInicio;
     }
 
-    public void setTimeInicio(String timeInicio) {
-        this.timeInicio = timeInicio;
+    public void setTiempoInicio(String tiempoInicio) {
+        this.tiempoInicio = tiempoInicio;
     }
 
     public String getTiempoPrestamo() {

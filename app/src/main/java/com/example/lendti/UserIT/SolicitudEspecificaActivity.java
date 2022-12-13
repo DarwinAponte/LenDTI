@@ -10,11 +10,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.lendti.Dialogos.SolicitudRechazoFragment;
 import com.example.lendti.Entity.Equipo;
+import com.example.lendti.Entity.Solicitud;
 import com.example.lendti.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,6 +34,10 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
     Button btnAceptar,btnRechazar;
     BottomNavigationView bottomNavigationView;
+    ImageView fotodni;
+    String id;
+    Solicitud solicitud;
+    Equipo equipo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +45,7 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        String id =  getIntent().getStringExtra("idSolicitud");
+        id = getIntent().getStringExtra("idSolicitud");
         nombre = findViewById(R.id.tvClienteSoliUserIT);
         motivo = findViewById(R.id.tvMotivoSoliUserIT);
         curso = findViewById(R.id.tvCursoSoliUserIT);
@@ -51,6 +58,9 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
         incluye = findViewById(R.id.tvIncluyeSoliUserIT);
         btnAceptar = findViewById(R.id.buttonAceptar);
         btnRechazar = findViewById(R.id.buttonRechazar);
+        fotodni = findViewById(R.id.imageViewDNISoliUserIT);
+
+
 
         obtenerSolicitud(id);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -75,16 +85,14 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
         firebaseFirestore.collection("solicitudes").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String uidCliente = documentSnapshot.getString("uidCliente");
-                String motivoSoli = documentSnapshot.getString("motivo");
-                String cursoSoli = documentSnapshot.getString("curso");
-                String programasSoli = documentSnapshot.getString("programas");
-                String timeSoli = documentSnapshot.getString("time");
-                String otrosSoli = documentSnapshot.getString("otros");
-                String uidEquipo = documentSnapshot.getString("uidEquipo");
-                String urlDni = documentSnapshot.getString("urlFotoDNI");
+                solicitud = documentSnapshot.toObject(Solicitud.class);
 
-                firebaseFirestore.collection("clientes").document(uidCliente).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                if(!solicitud.getEstado().equals("pendiente")){
+                    btnAceptar.setVisibility(View.GONE);
+                    btnRechazar.setVisibility(View.GONE);
+                }
+
+                firebaseFirestore.collection("clientes").document(solicitud.getUidCliente()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String nombreCompleto = documentSnapshot.getString("nombre")+" "+documentSnapshot.getString("apellido");
@@ -92,9 +100,10 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
                     }
                 });
 
-                firebaseFirestore.collection("equipos").document(uidEquipo).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                firebaseFirestore.collection("equipos").document(solicitud.getUidEquipo()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        equipo = documentSnapshot.toObject(Equipo.class);
                         tipo.setText(documentSnapshot.getString("tipo"));
                         marca.setText(documentSnapshot.getString("marca"));
                         caracteristicas.setText(documentSnapshot.getString("caracteristicas"));
@@ -102,11 +111,12 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
                     }
                 });
 
-                motivo.setText(motivoSoli);
-                curso.setText(cursoSoli);
-                programas.setText(programasSoli);
-                prestamo.setText(timeSoli);
-                otros.setText(otrosSoli);
+                motivo.setText(solicitud.getMotivo());
+                curso.setText(solicitud.getCurso());
+                programas.setText(solicitud.getProgramas());
+                prestamo.setText(solicitud.getTiempoPrestamo());
+                otros.setText(solicitud.getOtros());
+                Glide.with(SolicitudEspecificaActivity.this).load(solicitud.getUrlFotoDNI()).into(fotodni);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -125,11 +135,23 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Query query = firebaseFirestore.collection("equipos");
-
-                        FirestoreRecyclerOptions<Equipo> firestoreRecyclerOptions =
-                                new FirestoreRecyclerOptions.Builder<Equipo>().setQuery(query,Equipo.class).build();
-
+                        solicitud.setEstado("aceptado");
+                        firebaseFirestore.collection("solicitudes").document(id).set(solicitud).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Integer stockInt = Integer.parseInt(equipo.getStock());
+                                Integer stockActua = stockInt - 1;
+                                equipo.setStock(String.valueOf(stockActua));
+                                firebaseFirestore.collection("equipos").document(solicitud.getUidEquipo()).set(equipo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(SolicitudEspecificaActivity.this,"Solicitud aceptadad exitosamente",Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(SolicitudEspecificaActivity.this,SolicitudActivity.class));
+                                        finish();
+                                    }
+                                });
+                            }
+                        });
 
                         startActivity(new Intent(SolicitudEspecificaActivity.this,SolicitudActivity.class));
                     }
