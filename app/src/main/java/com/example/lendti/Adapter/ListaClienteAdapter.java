@@ -30,7 +30,7 @@ public class ListaClienteAdapter extends FirestoreRecyclerAdapter<Solicitud,List
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Solicitud solicitudes) {
         holder.tipo.setText(solicitudes.getTipo());
         holder.marca.setText(solicitudes.getMarca());
-        holder.time.setText(solicitudes.getTime());
+        holder.time.setText(solicitudes.getTiempoInicio().toString());
         holder.estado.setText(solicitudes.getEstado());
 
 

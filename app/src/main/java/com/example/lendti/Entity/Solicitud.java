@@ -1,44 +1,8 @@
 package com.example.lendti.Entity;
 
+import com.google.firebase.Timestamp;
+
 public class Solicitud {
-
-    private String uidCliente;
-    private String uidEquipo;
-    private String tipo;
-    private String marca;
-    private String motivo;
-    private String curso;
-    private String tiempoInicio;
-    private String programas;
-    private String urlFotoDNI;
-    private String otros;
-    private String estado;
-    private String tiempoPrestamo;
-    private String tiempoFin;
-
-    public String getTiempoFin() {
-        return tiempoFin;
-    }
-
-    public void setTiempoFin(String tiempoFin) {
-        this.tiempoFin = tiempoFin;
-    }
-
-    public String getTiempoInicio() {
-        return tiempoInicio;
-    }
-
-    public void setTiempoInicio(String tiempoInicio) {
-        this.tiempoInicio = tiempoInicio;
-    }
-
-    public String getTiempoPrestamo() {
-        return tiempoPrestamo;
-    }
-
-    public void setTiempoPrestamo(String tiempoPrestamo) {
-        this.tiempoPrestamo = tiempoPrestamo;
-    }
 
     public String getUidCliente() {
         return uidCliente;
@@ -54,6 +18,22 @@ public class Solicitud {
 
     public void setUidEquipo(String uidEquipo) {
         this.uidEquipo = uidEquipo;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
     public String getMotivo() {
@@ -72,6 +52,13 @@ public class Solicitud {
         this.curso = curso;
     }
 
+    public Timestamp getTiempoInicio() {
+        return tiempoInicio;
+    }
+
+    public void setTiempoInicio(Timestamp tiempoInicio) {
+        this.tiempoInicio = tiempoInicio;
+    }
 
     public String getProgramas() {
         return programas;
@@ -97,22 +84,6 @@ public class Solicitud {
         this.otros = otros;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -120,4 +91,36 @@ public class Solicitud {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getTiempoPrestamo() {
+        return tiempoPrestamo;
+    }
+
+    public void setTiempoPrestamo(String tiempoPrestamo) {
+        this.tiempoPrestamo = tiempoPrestamo;
+    }
+
+    public Timestamp getTiempoFin() {
+        return tiempoFin;
+    }
+
+    public void setTiempoFin(Timestamp tiempoFin) {
+        this.tiempoFin = tiempoFin;
+    }
+
+    private String uidCliente;
+    private String uidEquipo;
+    private String tipo;
+    private String marca;
+    private String motivo;
+    private String curso;
+    private Timestamp tiempoInicio;
+    private String programas;
+    private String urlFotoDNI;
+    private String otros;
+    private String estado;
+    private String tiempoPrestamo;
+    private Timestamp tiempoFin;
+
+
 }

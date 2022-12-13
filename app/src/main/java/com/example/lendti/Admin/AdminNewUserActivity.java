@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.lendti.Entity.UserIT;
+import com.example.lendti.Entity.UserTI;
 import com.example.lendti.R;
 import com.example.lendti.RegisterActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -91,7 +91,7 @@ public class AdminNewUserActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     String UserId = firebaseAuth.getCurrentUser().getUid();
-                    UserIT userITNew= new UserIT(nombre,correo,codigo,passwd,fotoPerfilUrl);
+                    UserTI userITNew= new UserTI(nombre,correo,codigo,passwd,fotoPerfilUrl);
                     firebaseFirestore.collection("users").document(UserId).set(userITNew).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

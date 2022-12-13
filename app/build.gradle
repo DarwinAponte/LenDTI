@@ -70,5 +70,7 @@ dependencies {
 
     //sliders
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+    //circleImageview
+    implementation 'com.mikhaellopez:circularimageview:4.3.1'
 
 }

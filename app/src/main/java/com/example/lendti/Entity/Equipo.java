@@ -14,9 +14,6 @@ public class Equipo {
         this.stock = stock;
         this.listaFotos = listaFotos;
     }
-    public Equipo(){
-
-    }
 
     private String tipo;
     private String marca;
@@ -29,16 +26,6 @@ public class Equipo {
     public Equipo(){
 
     }
-
-    public Equipo(String tipo, String marca, String caracteristicas, String incluye, String stock, List<String> listaFotos) {
-        this.tipo = tipo;
-        this.marca = marca;
-        this.caracteristicas = caracteristicas;
-        this.incluye = incluye;
-        this.stock = stock;
-        this.listaFotos = listaFotos;
-    }
-
     public Timestamp getTimestamp() {
         return timestamp;
     }

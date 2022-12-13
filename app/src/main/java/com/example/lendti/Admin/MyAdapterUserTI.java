@@ -13,20 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.lendti.Entity.UserIT;
+import com.example.lendti.Entity.UserTI;
+import com.example.lendti.Entity.UserTI;
 import com.example.lendti.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 
 public class MyAdapterUserTI extends RecyclerView.Adapter<MyAdapterUserTI.MyViewHolder>{
-    public MyAdapterUserTI(Context context, ArrayList<UserIT> list) {
+    public MyAdapterUserTI(Context context, ArrayList<UserTI> list) {
         this.context = context;
         this.list = list;
     }
 
     Context context;
-    ArrayList<UserIT> list;
+    ArrayList<UserTI> list;
 
 
     @NonNull
@@ -38,7 +39,7 @@ public class MyAdapterUserTI extends RecyclerView.Adapter<MyAdapterUserTI.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyAdapterUserTI.MyViewHolder holder, int position) {
-        UserIT userIT=list.get(position);
+        UserTI userIT=list.get(position);
         holder.nombre.setText(userIT.getNombre());
         holder.correo.setText(userIT.getCorreo());
         holder.codigo.setText(userIT.getCodigo());

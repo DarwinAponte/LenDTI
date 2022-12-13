@@ -19,9 +19,7 @@ public class UserTI {
         this.password = password;
         this.urlfoto = urlfoto;
     }
-    public UserIT(){
 
-    }
 
     public String getNombre() {
         return nombre;

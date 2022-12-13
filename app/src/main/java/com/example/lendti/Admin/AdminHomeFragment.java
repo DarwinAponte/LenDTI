@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.lendti.Entity.UserIT;
+import com.example.lendti.Entity.UserTI;
 import com.example.lendti.R;
-import com.getbase.floatingactionbutton.FloatingActionButton;
+//import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +30,7 @@ public class AdminHomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private DatabaseReference reference;
-    ArrayList<UserIT> listaUserTI;
+    ArrayList<UserTI> listaUserTI;
     MyAdapterUserTI adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +52,7 @@ public class AdminHomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    UserIT userIT=dataSnapshot.getValue(UserIT.class);
+                    UserTI userIT=dataSnapshot.getValue(UserTI.class);
                     listaUserTI.add(userIT);
                 }
                 adapter.notifyDataSetChanged();

@@ -33,7 +33,7 @@ public class ListadeSolicitudesAprobadasAdapter extends FirestoreRecyclerAdapter
     protected void onBindViewHolder(@NonNull ViewHolder viewholder, int position, @NonNull Solicitud solicitudes) {
         viewholder.tipo.setText(solicitudes.getTipo());
         viewholder.marca.setText(solicitudes.getMarca());
-        viewholder.time.setText(solicitudes.getTime());
+        viewholder.time.setText(solicitudes.getTiempoInicio().toString());
 
     }
 
