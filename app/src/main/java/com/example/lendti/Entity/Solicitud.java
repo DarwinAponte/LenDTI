@@ -8,20 +8,36 @@ public class Solicitud {
     private String marca;
     private String motivo;
     private String curso;
-    private String time;
+    private String timeInicio;
     private String programas;
     private String urlFotoDNI;
     private String otros;
     private String estado;
-    private String cantidad;
+    private String tiempoPrestamo;
+    private String tiempoFin;
 
-
-    public String getCantidad() {
-        return cantidad;
+    public String getTiempoFin() {
+        return tiempoFin;
     }
 
-    public void setCantidad(String cantidad) {
-        this.cantidad = cantidad;
+    public void setTiempoFin(String tiempoFin) {
+        this.tiempoFin = tiempoFin;
+    }
+
+    public String getTimeInicio() {
+        return timeInicio;
+    }
+
+    public void setTimeInicio(String timeInicio) {
+        this.timeInicio = timeInicio;
+    }
+
+    public String getTiempoPrestamo() {
+        return tiempoPrestamo;
+    }
+
+    public void setTiempoPrestamo(String tiempoPrestamo) {
+        this.tiempoPrestamo = tiempoPrestamo;
     }
 
     public String getUidCliente() {
@@ -56,13 +72,6 @@ public class Solicitud {
         this.curso = curso;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public String getProgramas() {
         return programas;

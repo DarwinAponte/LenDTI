@@ -306,6 +306,7 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
         bitmapDNISI.compress(Bitmap.CompressFormat.JPEG,100,baosDNI);
         StorageReference filePathDNI = miStorage.child(subirStorageSolicitud).child(timeStampDNI);
         byte[] datas= baosDNI.toByteArray();
+
         UploadTask uploadTask=filePathDNI.putBytes(datas);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -331,11 +332,11 @@ public class ReservaDispositivosActivity extends AppCompatActivity {
                             map.put("estado","pendiente");
                             map.put("uidCliente",uidUsuario);
                             map.put("uidEquipo",id);
-                            map.put("cantidad",cantidad2);
+                            map.put("tiempoPrestamo",cantidad2);
                             map.put("otros",otros2);
-                            map.put("FotoDNI",DNIURL);
-                            map.put("FechaSolicitudInicio",timestampInicio);
-                            map.put("FechaSolicitudFin",timeStampSolicitudFIN);
+                            map.put("urlFotoDNI",DNIURL);
+                            map.put("tiempoInicio",timestampInicio);
+                            map.put("tiempoFin",timeStampSolicitudFIN);
 
                             firebaseFirestore.collection("solicitudes").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
