@@ -49,6 +49,8 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
         marca = findViewById(R.id.tvMarcaSoliUserIT);
         caracteristicas = findViewById(R.id.tvCaracteristicasSoliUserIT);
         incluye = findViewById(R.id.tvIncluyeSoliUserIT);
+        btnAceptar = findViewById(R.id.buttonAceptar);
+        btnRechazar = findViewById(R.id.buttonRechazar);
 
         obtenerSolicitud(id);
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +82,7 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
                 String timeSoli = documentSnapshot.getString("time");
                 String otrosSoli = documentSnapshot.getString("otros");
                 String uidEquipo = documentSnapshot.getString("uidEquipo");
+                String urlDni = documentSnapshot.getString("urlFotoDNI");
 
                 firebaseFirestore.collection("clientes").document(uidCliente).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -89,7 +92,7 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
                     }
                 });
 
-                firebaseFirestore.collection("equipos").document(uidCliente).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                firebaseFirestore.collection("equipos").document(uidEquipo).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         tipo.setText(documentSnapshot.getString("tipo"));
@@ -193,7 +196,7 @@ public class SolicitudEspecificaActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_perfil:
-                        startActivity(new Intent(SolicitudEspecificaActivity.this,PerfilActivity.class));
+                        startActivity(new Intent(SolicitudEspecificaActivity.this, PerfilTIActivity.class));
                         overridePendingTransition(0,0);
                         finish();
                         return true;

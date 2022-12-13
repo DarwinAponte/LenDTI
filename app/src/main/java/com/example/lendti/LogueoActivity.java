@@ -122,6 +122,7 @@ public class LogueoActivity extends AppCompatActivity {
                                                 }else{
                                                     Intent i = new Intent(LogueoActivity.this, ListaEquipoActivity.class);
                                                     i.putExtra("main","main");
+                                                    i.putExtra("lista","");
                                                     startActivity(i);
                                                     finish();
                                                     Toast.makeText(LogueoActivity.this,"Bienvenido UsuarioTI",Toast.LENGTH_SHORT).show();

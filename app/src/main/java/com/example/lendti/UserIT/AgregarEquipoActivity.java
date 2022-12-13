@@ -1,50 +1,54 @@
 package com.example.lendti.UserIT;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.lendti.Adapter.EquipoFotoAdapter;
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.lendti.Adapter.EquipoITAdapter;
-import com.example.lendti.BottomSheetMenuFragment;
+import com.example.lendti.Adapter.PhotoAdapter;
 import com.example.lendti.Entity.Equipo;
 import com.example.lendti.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import butterknife.OnClick;
 
 public class AgregarEquipoActivity extends AppCompatActivity {
 
@@ -62,30 +66,54 @@ public class AgregarEquipoActivity extends AppCompatActivity {
     EquipoITAdapter equipoITAdapter;
     BottomNavigationView bottomNavigationView;
     RecyclerView rvImagen;
-    ImageButton btnGalery,btnCamara;
-    ProgressDialog dProgress;
-    private static final int GALLERY_INTENT = 1;
-    private static final int CODE_SEL_IMAGE = 300;
-    Uri imageUrl;
-    String idd;
-    String storagePath = "equipo/*";
-    String photo = "photo";
-    List<String> listaPhotos = new ArrayList<>();
+    ImageButton btngaleria,btncamara;
+    ProgressBar pbfoto;
+    GridLayout glEquipos;
+    ImageSlider isequipo;
+    private Uri cameraUri;
+    Equipo equipo;
+
+    String id;
+    String ver;
+    private List<String> listFotos = new ArrayList<>();
+    PhotoAdapter fotoAdapter;
+    Timestamp timestap;
+    ActivityResultLauncher<Intent> launcherPhotoDocument = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Uri uri = result.getData().getData();
+                    compressImageAndUpload(uri,50);
+                } else {
+                    Toast.makeText(AgregarEquipoActivity.this, "Debe seleccionar un archivo", Toast.LENGTH_SHORT).show();
+                }
+            }
+    );
+    ActivityResultLauncher<Intent> launcherPhotoCamera = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    compressImageAndUpload(cameraUri,25);
+                } else {
+                    Toast.makeText(AgregarEquipoActivity.this, "Debe seleccionar un archivo", Toast.LENGTH_SHORT).show();
+                }
+            }
+    );
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_equipo);
 
-        String id =  getIntent().getStringExtra("idEquipo");
-        String ver = getIntent().getStringExtra("ver");
+        id =  getIntent().getStringExtra("idEquipo");
+        ver = getIntent().getStringExtra("ver");
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        mStorage = FirebaseStorage.getInstance().getReference();
+        mStorage = FirebaseStorage.getInstance().getReference().child("images/");
 
 
 
-        setBottomNavigationView();
 
         buttonEditar = findViewById(R.id.buttonEditar);
         buttonEliminar = findViewById(R.id.buttonEliminar);
@@ -95,26 +123,41 @@ public class AgregarEquipoActivity extends AppCompatActivity {
         caracteristicas = findViewById(R.id.editTextCaracteristicas);
         incluye = findViewById(R.id.editTextTextIncluye);
         stock =  findViewById(R.id.editTextNumberStock);
-        btnGalery = findViewById(R.id.imageBtnGaleria);
+        btngaleria = findViewById(R.id.imageBtnGaleria);
         rvImagen = findViewById(R.id.recycleviewImagenEquipo);
-
-        rvImagen.setLayoutManager(new GridLayoutManager(this,2));
-
-        btnGalery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                uploadPhoto();
-            }
-        });
-
-
-
+        btncamara = findViewById(R.id.imageBtnCamara);
+        pbfoto = findViewById(R.id.pbAddPhotoEquipo);
+        glEquipos= findViewById(R.id.glCreateEquipo);
+        isequipo = findViewById(R.id.isEquiposImages);
 
 
 
         if(id==null || id ==""){
+
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+            fotoAdapter = new PhotoAdapter(this, listFotos);
+            GridLayoutManager layoutManager = new GridLayoutManager(this, 6);
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    switch (position % 5) {
+                        case 0:
+                        case 1:
+                        case 2:
+                            return 2;
+                        case 3:
+                        case 4:
+                            return 3;
+                    }
+                    throw new IllegalStateException("internal error");
+                }
+            });
+
+            rvImagen.setAdapter(fotoAdapter);
+            rvImagen.setLayoutManager(gridLayoutManager);
+            evaluarEmpty();
             btnagregar.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
                     String tipoEquipo = tipo.getText().toString().trim();
@@ -125,12 +168,12 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                     if(tipoEquipo.isEmpty() || marcaEquipo.isEmpty() || crtEquipo.isEmpty() || incluyeEquipo.isEmpty() | stockEquipo.isEmpty()){
                         Toast.makeText(AgregarEquipoActivity.this,"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
                     }else{
-                        agregarEquipo(tipoEquipo,marcaEquipo,crtEquipo,incluyeEquipo,stockEquipo);
+                        agregarEquipo(tipoEquipo,marcaEquipo,crtEquipo,incluyeEquipo,stockEquipo,listFotos);
                     }
                 }
             });
         }else{
-            if(ver==null || ver==""){
+            if(ver==null || ver.equals("")){
                 btnagregar.setText("Actualizar");
                 obtenerEquipo(id);
                 btnagregar.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +187,7 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                         if(tipoEquipo.isEmpty() || marcaEquipo.isEmpty() || crtEquipo.isEmpty() || incluyeEquipo.isEmpty() | stockEquipo.isEmpty()){
                             Toast.makeText(AgregarEquipoActivity.this,"Los campos no pueden estar vacios",Toast.LENGTH_SHORT).show();
                         }else{
-                            actualizarEquipo(tipoEquipo,marcaEquipo,crtEquipo,incluyeEquipo,stockEquipo,id);
+                            actualizarEquipo(tipoEquipo,marcaEquipo,crtEquipo,incluyeEquipo,stockEquipo,id,listFotos);
                         }
                     }
                 });
@@ -164,6 +207,10 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                 buttonEditar.setVisibility(View.VISIBLE);
                 buttonEliminar.setVisibility(View.VISIBLE);
                 obtenerEquipo(id);
+                btncamara.setVisibility(View.GONE);
+                btngaleria.setVisibility(View.GONE);
+                isequipo.setVisibility(View.VISIBLE);
+                glEquipos.setVisibility(View.GONE);
                 buttonEditar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -181,6 +228,32 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                         buttonEliminar.setVisibility(View.GONE);
                         btnagregar.setVisibility(View.VISIBLE);
                         btnagregar.setText("Actualizar");
+                        btncamara.setVisibility(View.VISIBLE);
+                        btngaleria.setVisibility(View.VISIBLE);
+                        isequipo.setVisibility(View.GONE);
+                        glEquipos.setVisibility(View.VISIBLE);
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(AgregarEquipoActivity.this, 2);
+                        fotoAdapter = new PhotoAdapter(AgregarEquipoActivity.this, listFotos);
+                        GridLayoutManager layoutManager = new GridLayoutManager(AgregarEquipoActivity.this, 6);
+                        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                            @Override
+                            public int getSpanSize(int position) {
+                                switch (position % 5) {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                        return 2;
+                                    case 3:
+                                    case 4:
+                                        return 3;
+                                }
+                                throw new IllegalStateException("internal error");
+                            }
+                        });
+
+                        rvImagen.setAdapter(fotoAdapter);
+                        rvImagen.setLayoutManager(gridLayoutManager);
+                        evaluarEmpty();
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -192,7 +265,7 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                                 if (tipoEquipo.isEmpty() || marcaEquipo.isEmpty() || crtEquipo.isEmpty() || incluyeEquipo.isEmpty() | stockEquipo.isEmpty()) {
                                     Toast.makeText(AgregarEquipoActivity.this, "Los campos no pueden estar vacios", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    actualizarEquipo(tipoEquipo, marcaEquipo, crtEquipo, incluyeEquipo, stockEquipo, id);
+                                    actualizarEquipo(tipoEquipo, marcaEquipo, crtEquipo, incluyeEquipo, stockEquipo, id,listFotos);
                                 }
                             }
                         });
@@ -214,24 +287,20 @@ public class AgregarEquipoActivity extends AppCompatActivity {
 
     }
 
-    public void agregarEquipo(String tipo,String marca,String caract, String incluye,String stock){
+    public void agregarEquipo(String tipo,String marca,String caract, String incluye,String stock,List<String> lista){
 
-        if(listaPhotos.size()<2){
-            Toast.makeText(AgregarEquipoActivity.this,"Porfavor agregue Fotos",Toast.LENGTH_SHORT).show();
+        if(lista.size()!=3){
+            Toast.makeText(AgregarEquipoActivity.this,"Porfavor agregue 3 fotos",Toast.LENGTH_SHORT).show();
         }else{
-            Equipo equipo = new Equipo();
-            equipo.setTipo(tipo);
-            equipo.setMarca(marca);
-            equipo.setCaracteristicas(caract);
-            equipo.setIncluye(incluye);
-            equipo.setStock(stock);
-            equipo.setListaFotos(listaPhotos);
+            Equipo equipo = new Equipo(tipo,marca,caract,incluye,stock,lista);
+            equipo.setTimestamp(Timestamp.now());
             firebaseFirestore.collection("equipos").add(equipo).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
-                    idd = documentReference.getId();
                     Toast.makeText(AgregarEquipoActivity.this,"Agregado exitosamente",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AgregarEquipoActivity.this,ListaEquipoActivity.class));
+                    Intent i = new Intent(AgregarEquipoActivity.this,ListaEquipoActivity.class);
+                    i.putExtra("lista","lista");
+                    startActivity(i);
                     finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -241,31 +310,32 @@ public class AgregarEquipoActivity extends AppCompatActivity {
                 }
             });
         }
-
-
     }
 
 
-    public void actualizarEquipo(String tipo,String marca,String caract, String incluye,String stock,String id){
-        Equipo equipo = new Equipo();
-        equipo.setTipo(tipo);
-        equipo.setMarca(marca);
-        equipo.setCaracteristicas(caract);
-        equipo.setIncluye(incluye);
-        equipo.setStock(stock);
-        firebaseFirestore.collection("equipos").document(id).set(equipo).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(AgregarEquipoActivity.this,"Actualizado exitosamente",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AgregarEquipoActivity.this,ListaEquipoActivity.class));
-                finish();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AgregarEquipoActivity.this,"Error al actualizar",Toast.LENGTH_SHORT).show();
-            }
-        });
+    public void actualizarEquipo(String tipo,String marca,String caract, String incluye,String stock,String id,List<String> lista){
+
+        if(lista.size() != 3){
+            Toast.makeText(AgregarEquipoActivity.this,"Porfavor agregue 3 fotos",Toast.LENGTH_SHORT).show();
+        }else {
+            Equipo equipo = new Equipo(tipo,marca,caract,incluye,stock,lista);
+            equipo.setTimestamp(Timestamp.now());
+            firebaseFirestore.collection("equipos").document(id).set(equipo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(AgregarEquipoActivity.this, "Actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(AgregarEquipoActivity.this, ListaEquipoActivity.class);
+                    i.putExtra("lista", "lista");
+                    startActivity(i);
+                    finish();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(AgregarEquipoActivity.this, "Error al actualizar", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 
@@ -273,13 +343,43 @@ public class AgregarEquipoActivity extends AppCompatActivity {
         firebaseFirestore.collection("equipos").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Equipo equipo = documentSnapshot.toObject(Equipo.class);
+                equipo = documentSnapshot.toObject(Equipo.class);
                 tipo.setText(equipo.getTipo());
                 marca.setText(equipo.getMarca());
                 caracteristicas.setText(equipo.getCaracteristicas());
                 incluye.setText(equipo.getIncluye());
                 stock.setText(equipo.getStock());
-                listaPhotos = equipo.getListaFotos();
+                listFotos = equipo.getListaFotos();
+                if(ver==null){
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(AgregarEquipoActivity.this, 2);
+                    fotoAdapter = new PhotoAdapter(AgregarEquipoActivity.this, listFotos);
+                    GridLayoutManager layoutManager = new GridLayoutManager(AgregarEquipoActivity.this, 6);
+                    layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                        @Override
+                        public int getSpanSize(int position) {
+                            switch (position % 5) {
+                                case 0:
+                                case 1:
+                                case 2:
+                                    return 2;
+                                case 3:
+                                case 4:
+                                    return 3;
+                            }
+                            throw new IllegalStateException("internal error");
+                        }
+                    });
+
+                    rvImagen.setAdapter(fotoAdapter);
+                    rvImagen.setLayoutManager(gridLayoutManager);
+                    evaluarEmpty();
+                }else{
+                    ArrayList<SlideModel> slideModels = new ArrayList<>();
+                    for (String url : equipo.getListaFotos()){
+                        slideModels.add(new SlideModel(url, ScaleTypes.CENTER_CROP));
+                    }
+                    isequipo.setImageList(slideModels);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -317,88 +417,128 @@ public class AgregarEquipoActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void setBottomNavigationView(){
-        bottomNavigationView = findViewById(R.id.bottomNavigationAgregarUserIT);
-        bottomNavigationView.clearAnimation();
-        bottomNavigationView.setSelectedItemId(R.id.page_gestion);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.page_inicio:
-                        Intent i  = new Intent(AgregarEquipoActivity.this,ListaEquipoActivity.class);
-                        i.putExtra("main","main");
-                        startActivity(i);
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.page_gestion:
-                        Intent i1  = new Intent(AgregarEquipoActivity.this,ListaEquipoActivity.class);
-                        i1.putExtra("lista","lista");
-                        startActivity(new Intent(i1));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.page_solicitudes:
-                        startActivity(new Intent(AgregarEquipoActivity.this,SolicitudActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.page_perfil:
-                        startActivity(new Intent(AgregarEquipoActivity.this,PerfilActivity.class));
-                        overridePendingTransition(0,0);
-                        finish();
-                        return true;
-                }
-                return false;
-            }
-        });
-    }
 
-    private void uploadPhoto() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent,CODE_SEL_IMAGE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == RESULT_OK){
-            if(requestCode == CODE_SEL_IMAGE){
-                imageUrl = data.getData();
-                subirPhoto(imageUrl);
-            }
+    public void compressImageAndUpload(Uri uri, int quality){
+        try{
+            Bitmap originalImage = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            originalImage.compress(Bitmap.CompressFormat.JPEG,quality,stream);
+            subirImagenAFirebase(stream.toByteArray());
+        }catch (Exception e){
+            Log.d("msg","error",e);
         }
     }
 
-    private void subirPhoto(Uri imageUrl) {
-
-        dProgress.setMessage("Subiendo Foto");
-        dProgress.show();
-        String ruteStoragePhoto = storagePath + "" + photo + "" + mAuth.getUid() + "";
-        StorageReference reference = mStorage.child(ruteStoragePhoto);
-        reference.putFile(imageUrl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+    public void subirImagenAFirebase(byte[] imageBytes) {
+        StorageReference photoChild = FirebaseStorage.getInstance().getReference().child("images/equipos/" + "photo_" + Timestamp.now().getSeconds() + ".jpg");
+        pbfoto.setVisibility(View.VISIBLE);
+        photoChild.putBytes(imageBytes).addOnSuccessListener(taskSnapshot -> {
+            pbfoto.setVisibility(View.GONE);
+            photoChild.getDownloadUrl().addOnSuccessListener(uri -> {
+                listFotos.add(uri.toString());
+                fotoAdapter.notifyDataSetChanged();
+                evaluarEmpty();
+            }).addOnFailureListener(e ->{
+                Toast.makeText(AgregarEquipoActivity.this, "Hubo un error al subir la imagen", Toast.LENGTH_SHORT).show();
+            });
+        }).addOnFailureListener(e -> {
+            pbfoto.setVisibility(View.GONE);
+            Toast.makeText(AgregarEquipoActivity.this, "Hubo un error al subir la imagen", Toast.LENGTH_SHORT).show();
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isSuccessful());
-                    if(uriTask.isSuccessful()){
-                        uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                String downloadUri = uri.toString();
-                                listaPhotos.add(downloadUri);
-                                EquipoFotoAdapter equipoFotoAdapter = new EquipoFotoAdapter(listaPhotos,AgregarEquipoActivity.this);
-                                rvImagen.setAdapter(equipoFotoAdapter);
-                                rvImagen.setLayoutManager(new GridLayoutManager(AgregarEquipoActivity.this,2));
-                            }
-                        });
-                    }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                long bytesTransferred = snapshot.getBytesTransferred();
+                long totalByteCount = snapshot.getTotalByteCount();
+                double progreso = (100.0 * bytesTransferred) / totalByteCount;
+                Long round = Math.round(progreso);
+                pbfoto.setProgress(round.intValue());
             }
         });
     }
+
+    public void evaluarEmpty(){
+        if (listFotos.size()>0){
+            rvImagen.setVisibility(View.VISIBLE);
+            glEquipos.setVisibility(View.GONE);
+        }else{
+            rvImagen.setVisibility(View.GONE);
+            glEquipos.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void removerFoto(int position){
+        listFotos.remove(position);
+        fotoAdapter.notifyDataSetChanged();
+        evaluarEmpty();
+    }
+
+    public void uploadPhotoFromDocument(View view) {
+        if (pbfoto.getVisibility()==View.VISIBLE){
+            Toast.makeText(AgregarEquipoActivity.this, "Espera a que se termine de subir la foto", Toast.LENGTH_SHORT).show();
+        }else{
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.setType("image/*");
+            launcherPhotoDocument.launch(intent);
+        }
+    }
+
+    public void uploadPhotoFromCamera(View view) {
+        if (pbfoto.getVisibility()==View.VISIBLE){
+            Toast.makeText(AgregarEquipoActivity.this, "Espera a que se termine de subir la foto", Toast.LENGTH_SHORT).show();
+        }else{
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, "New Picture");
+            values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera");
+            cameraUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
+            launcherPhotoCamera.launch(cameraIntent);
+        }
+    }
+
+    public void backButtonUsuariosList(View view){
+        Intent i = new Intent(AgregarEquipoActivity.this,ListaEquipoActivity.class);
+        i.putExtra("lista","lista");
+        startActivity(i);
+        finish();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

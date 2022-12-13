@@ -44,27 +44,28 @@ public class SolicitudITAdapter extends FirestoreRecyclerAdapter<Solicitud, Soli
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
         final String id = documentSnapshot.getId();
 
-        firebaseFirestore.collection("clientes").document(solicitud.getUidCliente())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                nombre = documentSnapshot.getString("nombre");
-                apellido = documentSnapshot.getString("apellido");
-            }
-        });
+        if(solicitud.getUidCliente()!=null){
+            firebaseFirestore.collection("clientes").document(solicitud.getUidCliente())
+                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            nombre = documentSnapshot.getString("nombre");
+                            apellido = documentSnapshot.getString("apellido");
+                            holder.cliente.setText("Cliente: "+ nombre +" "+apellido);
+                        }
+                    });
 
-        firebaseFirestore.collection("equipos").document(solicitud.getUidEquipo())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        tipo = documentSnapshot.getString("nombre");
-                        marca = documentSnapshot.getString("apellido");
-                    }
-                });
-
-        holder.cliente.setText("Cliente: "+ nombre +" "+apellido);
-        holder.tipo.setText("Tipo: " + tipo);
-        holder.marca.setText("Marca: " + marca);
+            firebaseFirestore.collection("equipos").document(solicitud.getUidEquipo())
+                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            tipo = documentSnapshot.getString("tipo");
+                            marca = documentSnapshot.getString("marca");
+                            holder.tipo.setText("Tipo: " + tipo);
+                            holder.marca.setText("Marca: " + marca);
+                        }
+                    });
+        }
 
         holder.ver.setOnClickListener(new View.OnClickListener() {
             @Override

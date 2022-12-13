@@ -1,8 +1,18 @@
 package com.example.lendti.Entity;
 
-public class UserIT {
+public class UserTI {
 
-    public UserIT(String nombre, String correo, String codigo, String password, String urlfoto) {
+    private String nombre;
+    private String correo;
+    private String codigo;
+    private String password;
+    private String urlfoto;
+
+    public UserTI(){
+
+    }
+
+    public UserTI(String nombre, String correo, String codigo, String password, String urlfoto) {
         this.nombre = nombre;
         this.correo = correo;
         this.codigo = codigo;
@@ -53,11 +63,7 @@ public class UserIT {
         this.urlfoto = urlfoto;
     }
 
-    private String nombre;
-    private String correo;
-    private String codigo;
-    private String password;
-    private String urlfoto;
+
 
 
 

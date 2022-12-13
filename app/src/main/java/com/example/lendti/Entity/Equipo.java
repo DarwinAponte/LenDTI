@@ -1,5 +1,7 @@
 package com.example.lendti.Entity;
 
+import com.google.firebase.Timestamp;
+
 import java.util.List;
 
 public class Equipo {
@@ -22,6 +24,28 @@ public class Equipo {
     private String incluye;
     private String stock;
     private List<String> listaFotos;
+    private transient Timestamp timestamp;
+
+    public Equipo(){
+
+    }
+
+    public Equipo(String tipo, String marca, String caracteristicas, String incluye, String stock, List<String> listaFotos) {
+        this.tipo = tipo;
+        this.marca = marca;
+        this.caracteristicas = caracteristicas;
+        this.incluye = incluye;
+        this.stock = stock;
+        this.listaFotos = listaFotos;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
 
 
 

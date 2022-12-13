@@ -54,36 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/imageButtonListaS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view"
-        app:srcCompat="@drawable/ic_baseline_format_list_bulleted_24" />
-
-    <ImageButton
-        android:id="@+id/imageButtonListaCuadradoS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#00FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_lista_cuadro" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="2dp"
-        android:layout_height="40dp"
-        android:background="#FFDDB0"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButtonListaCuadradoS"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonListaCuadradoS"
-        app:layout_constraintTop_toTopOf="@+id/imageButtonListaCuadradoS" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

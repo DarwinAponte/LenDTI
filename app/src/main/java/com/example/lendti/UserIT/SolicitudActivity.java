@@ -82,7 +82,7 @@ public class SolicitudActivity extends AppCompatActivity {
                     case R.id.page_solicitudes:
                         return true;
                     case R.id.page_perfil:
-                        startActivity(new Intent(SolicitudActivity.this,PerfilActivity.class));
+                        startActivity(new Intent(SolicitudActivity.this, PerfilTIActivity.class));
                         overridePendingTransition(0,0);
                         finish();
                         return true;

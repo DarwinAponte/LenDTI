@@ -42,7 +42,7 @@
         app:menu="@menu/userit_menu" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -90,9 +90,9 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="240dp"
         android:layout_marginEnd="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationGestionUserIT"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -124,8 +124,6 @@
         android:focusable="true"
         app:borderWidth="0dp"
         app:shapeAppearanceOverlay="@style/Bottom.circular"
-        app:fab_addButtonColorNormal="#FFDDB0"
-        app:fab_addButtonPlusIconColor="@color/seed"
         app:layout_constraintEnd_toEndOf="parent"
         app:fabCustomSize="56dp"
         app:maxImageSize="35dp"

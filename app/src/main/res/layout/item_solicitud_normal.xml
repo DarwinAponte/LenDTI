@@ -20,15 +20,15 @@
             android:orientation="horizontal">
 
 
-            <ImageView
-                android:id="@+id/imageViewSolicitud"
-                android:layout_width="90dp"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo" />
+
+                android:layout_marginTop="10dp"
+
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_reporte" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,8 +40,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="96dp"
-                    android:text="Cliente: Leo Mora"
+
+                    android:text="Cliente: Jose Velasquez"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +49,7 @@
                     android:id="@+id/tvTipoSolicitud"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="16dp"
                     android:text="Tipo: Laptop"
                     app:layout_constraintEnd_toEndOf="@+id/tvClienteSolicitud"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -60,7 +60,7 @@
                     android:id="@+id/tvMarcaSolicitud"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="16dp"
                     android:text="Marca: Lenovo"
                     app:layout_constraintEnd_toEndOf="@+id/tvTipoSolicitud"
                     app:layout_constraintHorizontal_bias="0.0"

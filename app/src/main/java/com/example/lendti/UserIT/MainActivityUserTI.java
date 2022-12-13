@@ -7,12 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.lendti.MainActivity;
 import com.example.lendti.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class MainActivityUserIT extends AppCompatActivity {
+public class MainActivityUserTI extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     @Override
@@ -37,15 +36,15 @@ public class MainActivityUserIT extends AppCompatActivity {
                     case R.id.page_inicio:
                         return true;
                     case R.id.page_gestion:
-                        startActivity(new Intent(MainActivityUserIT.this,ListaEquipoActivity.class));
+                        startActivity(new Intent(MainActivityUserTI.this,ListaEquipoActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_solicitudes:
-                        startActivity(new Intent(MainActivityUserIT.this,SolicitudActivity.class));
+                        startActivity(new Intent(MainActivityUserTI.this,SolicitudActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_perfil:
-                        startActivity(new Intent(MainActivityUserIT.this,PerfilActivity.class));
+                        startActivity(new Intent(MainActivityUserTI.this, PerfilTIActivity.class));
                         overridePendingTransition(0,0);
                         finish();
                         return true;

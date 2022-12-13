@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserIT.MainActivityUserIT"
+            android:name=".UserIT.MainActivityUserTI"
             android:exported="false" />
         <activity
             android:name=".Admin.AdminNewUserActivity"
@@ -58,7 +58,7 @@
             android:name=".Admin.AdminActivity"
             android:exported="false" />
         <activity
-            android:name=".UserIT.PerfilActivity"
+            android:name=".UserIT.PerfilTIActivity"
             android:exported="false">
         </activity>
         <activity

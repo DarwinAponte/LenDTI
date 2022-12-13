@@ -87,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 for (QueryDocumentSnapshot document : value){
-                    listaDocuments.add(document.getId());
+                    listaDocuments.add(document.getString("correo"));
                 }
             }
         });
@@ -99,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 for (QueryDocumentSnapshot document : value){
-                    listaDocuments.add(document.getId());
+                    listaDocuments.add(document.getString("correo"));
                 }
             }
         });
@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 for (QueryDocumentSnapshot document : value){
-                    listaDocuments.add(document.getId());
+                    listaDocuments.add(document.getString("correo"));
                 }
             }
         });

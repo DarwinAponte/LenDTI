@@ -7,27 +7,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lendti.BottomSheetMenuFragment;
-import com.example.lendti.Entity.UserIT;
+import com.example.lendti.Entity.UserTI;
 import com.example.lendti.R;
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import butterknife.OnClick;
 
-public class PerfilActivity extends AppCompatActivity {
+public class PerfilTIActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     FirebaseFirestore firebaseFirestore;
@@ -50,10 +46,10 @@ public class PerfilActivity extends AppCompatActivity {
         firebaseFirestore.collection("users").document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                UserIT userIT = documentSnapshot.toObject(UserIT.class);
-                nombre.setText(userIT.getNombre());
-                codigo.setText(userIT.getCodigo());
-                correo.setText(userIT.getCorreo());
+                UserTI userTI = documentSnapshot.toObject(UserTI.class);
+                nombre.setText(userTI.getNombre());
+                codigo.setText(userTI.getCodigo());
+                correo.setText(userTI.getCorreo());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -85,19 +81,17 @@ public class PerfilActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.page_inicio:
-                        Intent i  = new Intent(PerfilActivity.this,ListaEquipoActivity.class);
-                        i.putExtra("main","main");
-                        startActivity(i);
+                        startActivity(new Intent(PerfilTIActivity.this,ListaEquipoActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_gestion:
-                        Intent i1  = new Intent(PerfilActivity.this,ListaEquipoActivity.class);
+                        Intent i1  = new Intent(PerfilTIActivity.this,ListaEquipoActivity.class);
                         i1.putExtra("lista","lista");
                         startActivity(new Intent(i1));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_solicitudes:
-                        startActivity(new Intent(PerfilActivity.this,SolicitudActivity.class));
+                        startActivity(new Intent(PerfilTIActivity.this,SolicitudActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.page_perfil:

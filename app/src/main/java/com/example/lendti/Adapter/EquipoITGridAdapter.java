@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.lendti.Entity.Equipo;
 import com.example.lendti.R;
 import com.example.lendti.UserIT.AgregarEquipoActivity;
@@ -22,7 +24,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class EquipoITGridAdpater extends FirestoreRecyclerAdapter<Equipo, EquipoITGridAdpater.ViewHolder> {
+public class EquipoITGridAdapter extends FirestoreRecyclerAdapter<Equipo, EquipoITGridAdapter.ViewHolder> {
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     Activity activity;
@@ -33,20 +35,22 @@ public class EquipoITGridAdpater extends FirestoreRecyclerAdapter<Equipo, Equipo
      *
      * @param options
      */
-    public EquipoITGridAdpater(@NonNull FirestoreRecyclerOptions<Equipo> options,Activity activity) {
+    public EquipoITGridAdapter(@NonNull FirestoreRecyclerOptions<Equipo> options, Activity activity) {
         super(options);
         this.activity = activity;
+        System.out.println("entro al grid adapter");
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull EquipoITGridAdpater.ViewHolder holder, int position, @NonNull Equipo equipo) {
+    protected void onBindViewHolder(@NonNull EquipoITGridAdapter.ViewHolder holder, int position, @NonNull Equipo equipo) {
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(holder.getAdapterPosition());
         final String id = documentSnapshot.getId();
 
         holder.tipo.setText(equipo.getTipo());
         holder.marca.setText(equipo.getMarca());
         holder.stock.setText(equipo.getStock()+" unidades");
-
+        Glide.with(activity).load(equipo.getListaFotos().get(0)).centerCrop().into(holder.foto);
+        System.out.println("entro al grid adapter");
         holder.btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +82,7 @@ public class EquipoITGridAdpater extends FirestoreRecyclerAdapter<Equipo, Equipo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        System.out.println("entro al grid adapter");
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lista_equipo_grid,parent,false);
         return new ViewHolder(v);
     }
@@ -90,6 +95,7 @@ public class EquipoITGridAdpater extends FirestoreRecyclerAdapter<Equipo, Equipo
         ImageButton btnEliminar;
         ImageButton btnEditar;
         ImageButton btnVer;
+        ImageView foto;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -99,6 +105,7 @@ public class EquipoITGridAdpater extends FirestoreRecyclerAdapter<Equipo, Equipo
             tipo = itemView.findViewById(R.id.textViewTipo);
             marca = itemView.findViewById(R.id.textViewMarca);
             stock = itemView.findViewById(R.id.textViewStock);
+            foto= itemView.findViewById(R.id.imageView2);
         }
     }
 
