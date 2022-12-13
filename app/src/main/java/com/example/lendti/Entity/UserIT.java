@@ -9,6 +9,9 @@ public class UserIT {
         this.password = password;
         this.urlfoto = urlfoto;
     }
+    public UserIT(){
+
+    }
 
     public String getNombre() {
         return nombre;

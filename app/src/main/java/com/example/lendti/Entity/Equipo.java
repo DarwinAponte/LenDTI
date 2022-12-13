@@ -4,12 +4,27 @@ import java.util.List;
 
 public class Equipo {
 
+    public Equipo(String tipo, String marca, String caracteristicas, String incluye, String stock, List<String> listaFotos) {
+        this.tipo = tipo;
+        this.marca = marca;
+        this.caracteristicas = caracteristicas;
+        this.incluye = incluye;
+        this.stock = stock;
+        this.listaFotos = listaFotos;
+    }
+    public Equipo(){
+
+    }
+
     private String tipo;
     private String marca;
     private String caracteristicas;
     private String incluye;
     private String stock;
     private List<String> listaFotos;
+
+
+
 
     public List<String> getListaFotos() {
         return listaFotos;

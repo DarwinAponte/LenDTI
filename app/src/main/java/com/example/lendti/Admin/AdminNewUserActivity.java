@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -32,11 +33,15 @@ import java.util.List;
 public class AdminNewUserActivity extends AppCompatActivity {
 
     FirebaseFirestore firebaseFirestore;
+    FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
     List<String> listaDocuments = new ArrayList<>();
     boolean exist = false;
     Button crearUserTI;
     EditText editTextNombre,editTextCorreo,editTextCodigo,editTextPass;
+
+    //Para la foto de perfil
+    private String fotoPerfilUrl="https://firebasestorage.googleapis.com/v0/b/lendti-3e9e3.appspot.com/o/Avatars%2FCliente.png?alt=media&token=2c8c7037-e4ce-4d48-b9b3-7f49bad85336";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +91,28 @@ public class AdminNewUserActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     String UserId = firebaseAuth.getCurrentUser().getUid();
-                    UserIT userITNew= new UserIT(nombre,correo,codigo,passwd,"");
+                    UserIT userITNew= new UserIT(nombre,correo,codigo,passwd,fotoPerfilUrl);
                     firebaseFirestore.collection("users").document(UserId).set(userITNew).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            startActivity(new Intent(AdminNewUserActivity.this,AdminActivity.class));
-                            finish();
-                            Toast.makeText(AdminNewUserActivity.this,"Se ha registrado correctamente",Toast.LENGTH_SHORT).show();
+
+                            firebaseDatabase.getInstance().getReference("UsuariosTI")
+                                            .child(UserId).setValue(userITNew)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        Toast.makeText(AdminNewUserActivity.this,"Se ha registrado correctamente",Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(AdminNewUserActivity.this,AdminActivity.class));
+                                                        finish();
+
+                                                    }
+                                                }
+                                            });
+
+
+
+
 
                         }
                     });
