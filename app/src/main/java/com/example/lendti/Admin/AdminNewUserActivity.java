@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -32,6 +33,7 @@ import java.util.List;
 public class AdminNewUserActivity extends AppCompatActivity {
 
     FirebaseFirestore firebaseFirestore;
+    FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
     List<String> listaDocuments = new ArrayList<>();
     boolean exist = false;
@@ -93,9 +95,24 @@ public class AdminNewUserActivity extends AppCompatActivity {
                     firebaseFirestore.collection("users").document(UserId).set(userITNew).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            startActivity(new Intent(AdminNewUserActivity.this,AdminActivity.class));
-                            finish();
-                            Toast.makeText(AdminNewUserActivity.this,"Se ha registrado correctamente",Toast.LENGTH_SHORT).show();
+
+                            firebaseDatabase.getInstance().getReference("UsuariosTI")
+                                            .child(UserId).setValue(userITNew)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        Toast.makeText(AdminNewUserActivity.this,"Se ha registrado correctamente",Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(AdminNewUserActivity.this,AdminActivity.class));
+                                                        finish();
+
+                                                    }
+                                                }
+                                            });
+
+
+
+
 
                         }
                     });
