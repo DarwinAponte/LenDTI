@@ -38,6 +38,9 @@ public class AdminNewUserActivity extends AppCompatActivity {
     Button crearUserTI;
     EditText editTextNombre,editTextCorreo,editTextCodigo,editTextPass;
 
+    //Para la foto de perfil
+    private String fotoPerfilUrl="https://firebasestorage.googleapis.com/v0/b/lendti-3e9e3.appspot.com/o/Avatars%2FCliente.png?alt=media&token=2c8c7037-e4ce-4d48-b9b3-7f49bad85336";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +89,7 @@ public class AdminNewUserActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     String UserId = firebaseAuth.getCurrentUser().getUid();
-                    UserIT userITNew= new UserIT(nombre,correo,codigo,passwd,"");
+                    UserIT userITNew= new UserIT(nombre,correo,codigo,passwd,fotoPerfilUrl);
                     firebaseFirestore.collection("users").document(UserId).set(userITNew).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
